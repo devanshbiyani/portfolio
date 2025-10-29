@@ -47,7 +47,6 @@ async function getNowPlaying() {
         throw new Error('Could not get access token');
     }
 
-    // --- NEW LOGGING ---
     // This log will PROVE the new code is running.
     console.log('Attempting to fetch from Spotify endpoint:', NOW_PLAYING_ENDPOINT);
 
@@ -57,15 +56,21 @@ async function getNowPlaying() {
         },
     });
 
+    // --- THIS IS THE NEW FIX ---
     // If response is 204, it means nothing is playing
     if (response.status === 204) {
         console.log('Spotify returned 204, nothing is playing.');
         return { isPlaying: false };
     }
+    // If response is 404, it means no active device
+    if (response.status === 404) {
+        console.log('Spotify returned 404, no active device.');
+        return { isPlaying: false };
+    }
+    // --- END NEW FIX ---
     
-    // Handle other non-OK responses
+    // Handle *other* non-OK responses
     if (!response.ok) {
-        // This is the error you were seeing before
         throw new Error(`Spotify API returned ${response.status}`);
     }
 
@@ -99,7 +104,6 @@ export default async (req) => {
             status: 200,
             headers: {
                 'Content-Type': 'application/json',
-                // Add caching to prevent hitting the API too often
                 'cache-control': 'public, s-maxage=30, stale-while-revalidate=15',
             },
         });

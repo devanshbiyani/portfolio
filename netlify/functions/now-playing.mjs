@@ -7,6 +7,8 @@ const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
 
 // The `Authorization` header must be a Base64 encoded string of "clientId:clientSecret"
 const BASIC_TOKEN = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64');
+
+// --- THIS IS THE CORRECTED ENDPOINT ---
 const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing';`;
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 
@@ -27,8 +29,12 @@ async function getAccessToken() {
             refresh_token: REFRESH_TOKEN,
         }),
     });
-
-    return response.json();
+    
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(`Spotify token API returned ${response.status}: ${JSON.stringify(data)}`);
+    }
+    return data;
 }
 
 /**
@@ -41,6 +47,10 @@ async function getNowPlaying() {
         throw new Error('Could not get access token');
     }
 
+    // --- NEW LOGGING ---
+    // This log will PROVE the new code is running.
+    console.log('Attempting to fetch from Spotify endpoint:', NOW_PLAYING_ENDPOINT);
+
     const response = await fetch(NOW_PLAYING_ENDPOINT, {
         headers: {
             'Authorization': `Bearer ${access_token}`,
@@ -49,11 +59,13 @@ async function getNowPlaying() {
 
     // If response is 204, it means nothing is playing
     if (response.status === 204) {
+        console.log('Spotify returned 204, nothing is playing.');
         return { isPlaying: false };
     }
     
     // Handle other non-OK responses
     if (!response.ok) {
+        // This is the error you were seeing before
         throw new Error(`Spotify API returned ${response.status}`);
     }
 
@@ -61,6 +73,7 @@ async function getNowPlaying() {
     
     // Song is not playing or is a podcast
     if (!song.item || song.item.type !== 'track') {
+        console.log('No track item found or item is not a track.');
         return { isPlaying: false };
     }
 
@@ -77,8 +90,6 @@ async function getNowPlaying() {
 }
 
 // --- The Main Handler ---
-// This is the function that Netlify/Vercel will run
-
 export default async (req) => {
     try {
         const data = await getNowPlaying();
@@ -94,7 +105,7 @@ export default async (req) => {
         });
 
     } catch (error) {
-        console.error('Error in serverless function:', error);
+        console.error('Error in serverless function:', error.message);
         return new Response(JSON.stringify({ isPlaying: false, error: error.message }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' },

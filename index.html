@@ -565,7 +565,7 @@
             async function fetchNowPlaying() {
                 try {
                     // This path works for both Netlify and Vercel
-                    const response = await fetch('/api/now-playing');
+                    const response = await fetch('/.netlify/functions/now-playing');
                     
                     if (!response.ok) {
                         throw new Error('Failed to fetch data');

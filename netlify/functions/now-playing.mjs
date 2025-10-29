@@ -8,9 +8,9 @@ const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
 // The `Authorization` header must be a Base64 encoded string of "clientId:clientSecret"
 const BASIC_TOKEN = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64');
 
-// --- THIS IS THE CORRECTED ENDPOINT ---
-const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing';`;
-const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
+// --- CORRECTED ENDPOINTS (removed extra backtick and semicolon) ---
+const NOW_PLAYING_ENDPOINT = 'https://api.spotify.com/v1/me/player/currently-playing';
+const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
 
 // --- Helper Functions ---
 
@@ -47,7 +47,6 @@ async function getNowPlaying() {
         throw new Error('Could not get access token');
     }
 
-    // This log will PROVE the new code is running.
     console.log('Attempting to fetch from Spotify endpoint:', NOW_PLAYING_ENDPOINT);
 
     const response = await fetch(NOW_PLAYING_ENDPOINT, {
@@ -56,20 +55,19 @@ async function getNowPlaying() {
         },
     });
 
-    // --- THIS IS THE NEW FIX ---
     // If response is 204, it means nothing is playing
     if (response.status === 204) {
         console.log('Spotify returned 204, nothing is playing.');
         return { isPlaying: false };
     }
+    
     // If response is 404, it means no active device
     if (response.status === 404) {
         console.log('Spotify returned 404, no active device.');
         return { isPlaying: false };
     }
-    // --- END NEW FIX ---
     
-    // Handle *other* non-OK responses
+    // Handle other non-OK responses
     if (!response.ok) {
         throw new Error(`Spotify API returned ${response.status}`);
     }
@@ -87,7 +85,7 @@ async function getNowPlaying() {
         isPlaying: song.is_playing,
         trackName: song.item.name,
         artistName: song.item.artists.map((artist) => artist.name).join(', '),
-        albumArtUrl: song.item.album.images[0]?.url, // Get the largest album art
+        albumArtUrl: song.item.album.images[0]?.url,
         songUrl: song.item.external_urls.spotify,
         progressMs: song.progress_ms,
         durationMs: song.item.duration_ms,

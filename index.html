@@ -355,6 +355,7 @@
                             <label for="name" class="block text-base font-semibold text-gray-300 mb-3 group-focus-within:text-cyan-400 transition-colors">
                                 Name
                             </label>
+                            <!-- WIDTH FIX: Removed w-full -->
                             <input type="text" id="name" name="name" required
                                    class="form-input-enhanced text-base">
                         </div>
@@ -364,6 +365,7 @@
                             <label for="email" class="block text-base font-semibold text-gray-300 mb-3 group-focus-within:text-cyan-400 transition-colors">
                                 Email
                             </label>
+                            <!-- WIDTH FIX: Removed w-full -->
                             <input type="email" id="email" name="email" required
                                    class="form-input-enhanced text-base">
                         </div>
@@ -373,8 +375,9 @@
                             <label for="message" class="block text-base font-semibold text-gray-300 mb-3 group-focus-within:text-cyan-400 transition-colors">
                                 Message
                             </label>
+                            <!-- WIDTH FIX: Kept w-full -->
                             <textarea id="message" name="message" rows="6" required
-                                      class="form-input-enhanced resize-none text-base"></textarea>
+                                      class="form-input-enhanced resize-none text-base w-full"></textarea>
                         </div>
                         
                         <!-- Submit Button with enhanced styling -->
@@ -404,8 +407,8 @@
                 -->
                 <div class="mt-12 text-center">
                     <p class="text-gray-400 mb-4">Or reach out directly:</p>
-                    <a href="mailto:devanshbiyani@example.com" class="text-cyan-400 hover:text-cyan-300 font-medium inline-flex items-center">
-                        devanshbiyani@example.com
+                    <a href="mailto:devanshbiyani@gmail.com" class="text-cyan-400 hover:text-cyan-300 font-medium inline-flex items-center">
+                        devanshbiyani@gmail.com
                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
                 </div>
@@ -517,7 +520,9 @@
                                 '.form-input': {
                                     '@apply w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300': {},
                                 },
-                                '.form-input-enhanced': { '@apply w-full bg-white border-2 border-gray-600 rounded-xl px-5 py-3.5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all duration-300 hover:border-cyan-500 shadow-sm': {}, 
+                                // NOTE: w-full is now applied directly in the HTML,
+                                // but we leave the other styles here.
+                                '.form-input-enhanced': { '@apply bg-white border-2 border-gray-600 rounded-xl px-5 py-3.5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all duration-300 hover:border-cyan-500 shadow-sm': {}, 
                                 },
                                 '.skill-pill': {
                                     '@apply bg-gray-800 text-cyan-300 text-sm font-medium px-4 py-2 rounded-full': {},
@@ -717,3 +722,4 @@
     </script>
 </body>
 </html>
+

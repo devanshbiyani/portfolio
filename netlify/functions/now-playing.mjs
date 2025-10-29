@@ -7,7 +7,7 @@ const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
 
 // The `Authorization` header must be a Base64 encoded string of "clientId:clientSecret"
 const BASIC_TOKEN = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64');
-const NOW_PLAYING_ENDPOINT = `http://googleusercontent.com/spotify.com/4`;
+const NOW_PLAYING_ENDPOINT = `http://googleusercontent.com/spotify.com/5`;
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 
 // --- Helper Functions ---

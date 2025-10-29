@@ -535,60 +535,110 @@
             hiddenElements.forEach((el) => observer.observe(el));
 
 
-            // --- Spotify Widget Logic ---
+            // --- Real Spotify Widget Logic ---
             const spotifyWidget = document.getElementById('spotify-widget');
             const closeSpotify = document.getElementById('close-spotify');
-            const spotifyConnect = document.getElementById('spotify-connect');
             const playPauseBtn = document.getElementById('play-pause');
             const albumArt = document.getElementById('album-art');
-            let isPlaying = false;
+            const trackNameEl = document.getElementById('track-name');
+            const artistNameEl = document.getElementById('artist-name');
+            const albumArtImg = document.getElementById('album-art');
+            const currentTimeEl = document.getElementById('current-time');
+            const totalTimeEl = document.getElementById('total-time');
+            const progressFill = document.getElementById('progress-fill');
+            const spotifyConnectLink = document.getElementById('spotify-connect');
 
             // Close widget
             closeSpotify.addEventListener('click', () => {
                 spotifyWidget.classList.add('hidden');
             });
 
-            // Play/Pause toggle (simulated)
-            playPauseBtn.addEventListener('click', () => {
-                isPlaying = !isPlaying;
-                if (isPlaying) {
-                    playPauseBtn.innerHTML = '<svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
-                    albumArt.classList.remove('paused');
-                } else {
-                    playPauseBtn.innerHTML = '<svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-                    albumArt.classList.add('paused');
-                }
-            });
+            // Helper to format time from ms
+            function formatTime(ms) {
+                if (!ms) return '0:00';
+                const totalSeconds = Math.floor(ms / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
 
-            // Simulate Spotify connection (you'll replace this with actual Spotify API)
-            spotifyConnect.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // Simulated currently playing song
-                document.getElementById('track-name').textContent = 'Blinding Lights';
-                document.getElementById('artist-name').textContent = 'The Weeknd';
-                document.getElementById('album-art').src = 'https://i.scdn.co/image/ab67616d00001e02e6ca5be1c1fe83fcf1c70ba3';
-                document.getElementById('current-time').textContent = '1:23';
-                document.getElementById('total-time').textContent = '3:20';
-                document.getElementById('progress-fill').style.width = '41%';
-                
-                spotifyConnect.textContent = 'Connected ✓';
-                spotifyConnect.classList.add('pointer-events-none');
-                
-                // In a real implementation, you would:
-                // 1. Redirect to Spotify OAuth
-                // 2. Get access token
-                // 3. Fetch currently playing track
-                // 4. Update UI in real-time
-                
-                /* Example real implementation:
-                window.location.href = 'https://accounts.spotify.com/authorize?' + 
-                    'client_id=YOUR_CLIENT_ID&' +
-                    'response_type=token&' +
-                    'redirect_uri=YOUR_REDIRECT_URI&' +
-                    'scope=user-read-currently-playing';
-                */
-            });
+            async function fetchNowPlaying() {
+                try {
+                    // This path works for both Netlify and Vercel
+                    const response = await fetch('/api/now-playing');
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch data');
+                    }
+                    
+                    const data = await response.json();
+
+                    if (data.isPlaying && data.trackName) {
+                        // --- Update Text ---
+                        trackNameEl.textContent = data.trackName;
+                        artistNameEl.textContent = data.artistName;
+
+                        // --- Update Album Art ---
+                        albumArtImg.src = data.albumArtUrl || 'https://via.placeholder.com/64x64/1DB954/FFFFFF?text=♪';
+
+                        // --- Update Progress ---
+                        currentTimeEl.textContent = formatTime(data.progressMs);
+                        totalTimeEl.textContent = formatTime(data.durationMs);
+                        const progressPercent = (data.progressMs / data.durationMs) * 100;
+                        progressFill.style.width = `${progressPercent}%`;
+
+                        // --- Update Play/Pause Button ---
+                        if (data.isPlaying) {
+                            playPauseBtn.innerHTML = '<svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
+                            albumArt.classList.remove('paused');
+                        } else {
+                            playPauseBtn.innerHTML = '<svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                            albumArt.classList.add('paused');
+                        }
+                        
+                        // --- Update Links ---
+                        // Make the track name a link to the song
+                        trackNameEl.parentElement.href = data.songUrl || '#';
+                        trackNameEl.parentElement.target = '_blank';
+                        
+                        // Hide the "Connect" link
+                        spotifyConnectLink.classList.add('hidden');
+
+                    } else {
+                        // --- Not Playing State ---
+                        trackNameEl.textContent = 'Not Currently Playing';
+                        artistNameEl.textContent = 'Spotify';
+                        albumArtImg.src = 'https://via.placeholder.com/64x64/1DB954/FFFFFF?text=♪';
+                        albumArt.classList.add('paused');
+                        playPauseBtn.innerHTML = '<svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                        currentTimeEl.textContent = '0:00';
+                        totalTimeEl.textContent = '0:00';
+                        progressFill.style.width = '0%';
+                        spotifyConnectLink.classList.remove('hidden');
+                        spotifyConnectLink.textContent = 'Listen with me on Spotify →';
+                        spotifyConnectLink.href = 'http://googleusercontent.com/spotify.com/5'; // Your public Spotify profile
+                        spotifyConnectLink.target = '_blank';
+                    }
+
+                } catch (error) {
+                    console.error('Error fetching Now Playing:', error);
+                    // Show a subtle error state
+                    trackNameEl.textContent = 'Widget Error';
+                    artistNameEl.textContent = 'Could not connect to API';
+                    spotifyWidget.classList.remove('hidden'); // Ensure it's visible if there's an error
+                }
+            }
+
+            // Fetch data on page load
+            fetchNowPlaying();
+
+            // Fetch data every 10 seconds to keep it updated
+            setInterval(fetchNowPlaying, 10000);
+
+            // --- "Simulated Backend" Contact Form Logic ---
+            // (This part remains the same)
+            const contactForm = document.getElementById('contact-form');
+            // ... (rest of your form code) ...
 
 
             // --- "Simulated Backend" Contact Form Logic ---

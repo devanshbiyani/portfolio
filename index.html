@@ -10,6 +10,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
     <style>
+        /* === Floating Socials Bar === */
+        .floating-socials-bar {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: rgba(15, 23, 42, 0.8); /* slate-900 with 80% opacity */
+            backdrop-filter: blur(10px);
+            border: 1px solid #334155; /* slate-700 */
+            border-radius: 9999px; /* rounded-full */
+            padding: 0.75rem 1rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .floating-icon {
+            color: #94a3b8; /* slate-400 */
+            transition: all 0.2s ease;
+        }
+
+        .floating-icon:hover {
+            color: #22d3ee; /* cyan-400 */
+            transform: scale(1.1);
+        }
+
+        /* On mobile, stack it vertically and move it from the corner */
+        @media (max-width: 767px) {
+            .floating-socials-bar {
+                /* Center it on mobile */
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 1rem;
+                /* Make it horizontal again to fit */
+                padding: 0.5rem 0.75rem; 
+            }
+            .floating-socials-bar .flex {
+                flex-direction: row; /* Force row layout */
+                gap: 1.25rem; /* space-x-5 */
+            }
+            .floating-icon svg {
+                width: 1.25rem; /* w-5 */
+                height: 1.25rem; /* h-5 */
+            }
+        }
         /* Set default font */
         body {
             font-family: 'Inter', sans-serif;
@@ -444,7 +487,7 @@
                 <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
                 </svg>
-                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Now Playing</span>
+                <span id="spotify-status" class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Now Playing</span>
             </div>
             <button id="close-spotify" class="text-gray-500 hover:text-gray-300 transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -572,6 +615,7 @@
             const totalTimeEl = document.getElementById('total-time');
             const progressFill = document.getElementById('progress-fill');
             const spotifyConnectLink = document.getElementById('spotify-connect');
+            const spotifyStatusEl = document.getElementById('spotify-status'); // <-- New element
 
             // Close widget
             closeSpotify.addEventListener('click', () => {
@@ -586,6 +630,10 @@
                 const seconds = totalSeconds % 60;
                 return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
             }
+            
+            // SVG Icons for Play/Pause
+            const playIcon = '<svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+            const pauseIcon = '<svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
 
             async function fetchNowPlaying() {
                 try {
@@ -598,7 +646,7 @@
                     
                     const data = await response.json();
 
-                    if (data.isPlaying && data.trackName) {
+                    if (data.status === 'playing' || data.status === 'last_played') {
                         // --- Update Text ---
                         trackNameEl.textContent = data.trackName;
                         artistNameEl.textContent = data.artistName;
@@ -607,17 +655,20 @@
                         albumArtImg.src = data.albumArtUrl || 'https://via.placeholder.com/64x64/1DB954/FFFFFF?text=♪';
 
                         // --- Update Progress ---
-                        currentTimeEl.textContent = formatTime(data.progressMs);
+                        const progressMs = data.status === 'playing' ? data.progressMs : 0;
+                        const progressPercent = (progressMs / data.durationMs) * 100;
+                        currentTimeEl.textContent = formatTime(progressMs);
                         totalTimeEl.textContent = formatTime(data.durationMs);
-                        const progressPercent = (data.progressMs / data.durationMs) * 100;
                         progressFill.style.width = `${progressPercent}%`;
 
-                        // --- Update Play/Pause Button ---
-                        if (data.isPlaying) {
-                            playPauseBtn.innerHTML = '<svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
+                        // --- Update Play/Pause Button and Status Text ---
+                        if (data.status === 'playing') {
+                            spotifyStatusEl.textContent = 'Now Playing';
+                            playPauseBtn.innerHTML = pauseIcon;
                             albumArt.classList.remove('paused');
                         } else {
-                            playPauseBtn.innerHTML = '<svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                            spotifyStatusEl.textContent = 'Last Played';
+                            playPauseBtn.innerHTML = playIcon;
                             albumArt.classList.add('paused');
                         }
                         
@@ -630,15 +681,18 @@
                         spotifyConnectLink.classList.add('hidden');
 
                     } else {
-                        // --- Not Playing State ---
+                        // --- Not Playing State (Offline) ---
+                        spotifyStatusEl.textContent = 'Spotify';
                         trackNameEl.textContent = 'Not Currently Playing';
-                        artistNameEl.textContent = 'Spotify';
+                        artistNameEl.textContent = 'Listen with me on Spotify';
                         albumArtImg.src = 'https://via.placeholder.com/64x64/1DB954/FFFFFF?text=♪';
                         albumArt.classList.add('paused');
-                        playPauseBtn.innerHTML = '<svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                        playPauseBtn.innerHTML = playIcon;
                         currentTimeEl.textContent = '0:00';
                         totalTimeEl.textContent = '0:00';
                         progressFill.style.width = '0%';
+                        
+                        // Show connect link
                         spotifyConnectLink.classList.remove('hidden');
                         spotifyConnectLink.textContent = 'Listen with me on Spotify →';
                         spotifyConnectLink.href = 'http://googleusercontent.com/spotify.com/5'; // Your public Spotify profile
@@ -648,6 +702,7 @@
                 } catch (error) {
                     console.error('Error fetching Now Playing:', error);
                     // Show a subtle error state
+                    spotifyStatusEl.textContent = 'Error';
                     trackNameEl.textContent = 'Widget Error';
                     artistNameEl.textContent = 'Could not connect to API';
                     spotifyWidget.classList.remove('hidden'); // Ensure it's visible if there's an error
@@ -720,6 +775,30 @@
             });
         });
     </script>
+    <div class="floating-socials-bar">
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            
+            <a href="https://github.com/devanshbiyani" target="_blank" rel="noopener noreferrer" title="GitHub" class="floating-icon">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" clip-rule="evenodd"/></svg>
+            </a>
+            
+            <a href="https://www.linkedin.com/in/devansh-biyani" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="floating-icon">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
+            </a>
+
+            <a href="https://x.com/devansh_biyani" target="_blank" rel="noopener noreferrer" title="Twitter" class="floating-icon">
+                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+            </a>
+            
+            <a href="mailto:devanshbiyani@gmail.com" title="Email" class="floating-icon">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+            </a>
+            
+            <a href="https://drive.google.com/file/d/1Cmr90nvS4v-feH9SBq0Z3QyelCDmIaIJ/view?usp=sharing" target="_blank" title="Resume" class="floating-icon">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A1.875 1.875 0 0118.001 22.5H5.999a1.875 1.875 0 01-1.498-2.382z" /></svg>
+            </a>
+
+        </div>
+    </div>
 </body>
 </html>
-

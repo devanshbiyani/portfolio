@@ -10,49 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* === Floating Socials Bar === */
-        .floating-socials-bar {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            background: rgba(15, 23, 42, 0.8); /* slate-900 with 80% opacity */
-            backdrop-filter: blur(10px);
-            border: 1px solid #334155; /* slate-700 */
-            border-radius: 9999px; /* rounded-full */
-            padding: 0.75rem 1rem;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .floating-icon {
-            color: #94a3b8; /* slate-400 */
-            transition: all 0.2s ease;
-        }
-
-        .floating-icon:hover {
-            color: #22d3ee; /* cyan-400 */
-            transform: scale(1.1);
-        }
-
-        /* On mobile, stack it vertically and move it from the corner */
-        @media (max-width: 767px) {
-            .floating-socials-bar {
-                /* Center it on mobile */
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: 1rem;
-                /* Make it horizontal again to fit */
-                padding: 0.5rem 0.75rem; 
-            }
-            .floating-socials-bar .flex {
-                flex-direction: row; /* Force row layout */
-                gap: 1.25rem; /* space-x-5 */
-            }
-            .floating-icon svg {
-                width: 1.25rem; /* w-5 */
-                height: 1.25rem; /* h-5 */
-            }
-        }
         /* Set default font */
         body {
             font-family: 'Inter', sans-serif;
@@ -134,11 +91,12 @@
             display: none;
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 767px) {
             .spotify-widget {
                 width: calc(100vw - 2rem);
                 right: 1rem;
-                bottom: 1rem;
+                /* Move Spotify widget to avoid overlap with social bar */
+                bottom: 5.5rem; 
             }
         }
 
@@ -174,6 +132,50 @@
             transition: width 0.3s ease;
         }
 
+        /* === Floating Socials Bar === */
+        .floating-socials-bar {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: rgba(15, 23, 42, 0.8); /* slate-900 with 80% opacity */
+            backdrop-filter: blur(10px);
+            border: 1px solid #334155; /* slate-700 */
+            border-radius: 9999px; /* rounded-full */
+            padding: 0.75rem 1rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .floating-icon {
+            color: #94a3b8; /* slate-400 */
+            transition: all 0.2s ease;
+        }
+
+        .floating-icon:hover {
+            color: #22d3ee; /* cyan-400 */
+            transform: scale(1.1);
+        }
+
+        /* On mobile, stack it vertically and move it from the corner */
+        @media (max-width: 767px) {            
+            .floating-socials-bar {
+                /* Center it on mobile */
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 1rem;
+                /* Make it horizontal again to fit */
+                padding: 0.5rem 0.75rem; 
+            }
+            .floating-socials-bar .flex {
+                flex-direction: row; /* Force row layout */
+                gap: 1.25rem; /* space-x-5 */
+            }
+            .floating-icon svg {
+                width: 1.25rem; /* w-5 */
+                height: 1.25rem; /* h-5 */
+            }
+        }
+
     </style>
 </head>
 <body class="text-gray-300 antialiased">
@@ -196,7 +198,7 @@
                 I build dynamic and performant web applications, crafting intuitive experiences from pixel to database.
             </p>
             
-            <!-- Social Icons -->
+            <!-- Social Icons (in-page) -->
             <div class="flex space-x-6 mt-8">
                 <!-- LinkedIn -->
                 <a href="https://www.linkedin.com/in/devansh-biyani" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
@@ -243,7 +245,7 @@
                     <div class="flex flex-wrap gap-6 mt-4">
                         <!-- Basketball Hint -->
                         <div class="flex items-center space-x-2 text-gray-300">
-                            <svg class="w-5 h-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.792V6.167a2.833 2.833 0 00-2.833-2.833H5.833A2.833 2.833 0 003 6.167v6.625m18 0v5.583a2.833 2.833 0 01-2.833 2.833H5.833A2.833 2.833 0 013 18.375v-5.583m18 0c0 1.564-.47 3.036-1.333 4.25M3 12.792c0 1.564.47 3.036 1.333 4.25m15.334-4.25a2.833 2.833 0 01-2.833 2.833H8.833a2.833 2.833 0 01-2.833-2.833m11.166 0a2.833 2.833 0 00-2.833-2.833H8.833a2.833 2.833 0 00-2.833 2.833m11.166 0c0 1.564-.47 3.036-1.333 4.25M5.166 17.042c.864 1.214 2.336 2.091 3.667 2.091h6.334c1.33 0 2.802-.877 3.667-2.091m-11.166 0a2.833 2.833 0 012.833-2.833h5.5a2.833 2.833 0 012.833 2.833m-11.166 0c0-1.564.47-3.036 1.333-4.25m7.5 4.25c.864-1.214 1.333-2.686 1.333-4.25" /></svg>
+                            <svg class="w-5 h-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.792V6.167a2.833 2.833 0 00-2.833-2.833H5.833A2.833 2.833 0 003 6.167v6.625m18 0v5.583a2.833 2.833 0 01-2.833 2.833H5.833A2.833 2.833 0 013 18.375v-5.583m18 0c0 1.564-.47 3.036-1.333 4.25M3 12.792c0 1.564.47 3.036 1.333 4.25m15.334-4.25a2.833 2.833 0 01-2.833 2.833H8.833a2.833 2.833 0 01-2.833-2.833m11.166 0a2.833 2.833 0 00-2.833-2.833H8.833a2.833 2.833 0 00-2.833 2.833m11.166 0c0 1.564-.47 3.036-1.333 4.25M5.166 17.042c.864 1.214 2.336 2.091 3.667 2.091h6.334c1.33 0 2.802-.877 3.667-2.091m-11.166 0a2.833 2.833 0 012.833-2.833h5.5a2.833 2.833 0 012.833 2.833m-11.166 0c0-1.564.47 3.036-1.333 4.25m7.5 4.25c.864-1.214 1.333-2.686 1.333-4.25" /></svg>
                             <span>Driving on the court (Basketball)</span>
                         </div>
                         <!-- Music Hint -->
@@ -253,7 +255,7 @@
                         </div>
                         <!-- Workout Hint -->
                         <div class="flex items-center space-x-2 text-gray-300">
-                            <svg class="w-5 h-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3A8.5 8.5 0 0118 11.5c0 1.63-.463 3.16-1.258 4.49L14 13.5v-1.5h-1.5v-1.5H11v-1.5H9.5V3zM9.5 3A8.5 8.5 0 001 11.5c0 1.63.463 3.16 1.258 4.49L6 13.5v-1.5h1.5v-1.5H9v-1.5h.5V3zM9.5 3v1.5h1.5V6H13v1.5h1.5V9H16v1.5h1.242c.49-.85.758-1.784.758-2.75A8.5 8.5 0 009.5 3zm0 0V1.5c.917 0 1.8.15 2.625.433m-2.625 0V1.5A8.5 8.5 0 006.875 3.433M3 13.5A8.5 8.5 0 0011.5 21c1.63 0 3.16-.463 4.49-1.258L13.5 18h-1.5v-1.5H10.5v-1.5H9v-1.5H3v1.5zm0 0v1.5c0 .917.15 1.8.433 2.625M3 13.5v1.5h1.5V16.5H6V18h1.5v1.5h1.242c-.49.85-.758 1.784-.758 2.75A8.5 8.5 0 013 13.5zm16.742 1.99L18 18h-1.5v-1.5H15v-1.5h-1.5v-1.5h-1.242c.49-.85.758-1.784.758-2.75A8.5 8.5 0 0119.742 15.49zM21 13.5v-1.5a8.5 8.5 0 00-2.067-5.375" /></svg>
+                            <svg class="w-5 h-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3A8.5 8.5 0 0118 11.5c0 1.63-.463 3.16-1.258 4.49L14 13.5v-1.5h-1.5v-1.5H11v-1.5H9.5V3zM9.5 3A8.5 8.5 0 001 11.5c0 1.63.463 3.16 1.258 4.49L6 13.5v-1.5h1.5v-1.5H9v-1.5h.5V3zM9.5 3v1.5h1.5V6H13v1.5h1.5V9H16v1.5h1.242c.49-.85.758-1.784.758-2.75A8.5 8.5 0 009.5 3zm0 0V1.5c.917 0 1.8.15 2.625.433m-2.625 0V1.5A8.5 8.5 0 006.875 3.433M3 13.5A8.5 8.5 0 0011.5 21c1.63 0 3.16-.463 4.49-1.258L13.5 18h-1.5v-1.5H10.5v-1.5H9v-1.5H3v1.5zm0 0v1.5c0 .917.15 1.8.433 2.625M3 13.5v1.5h1.5V16.5H6V18h1.5v1.5h1.242c-.49.85-.758-1.784-.758-2.75A8.5 8.5 0 013 13.5zm16.742 1.99L18 18h-1.5v-1.5H15v-1.5h-1.5v-1.5h-1.242c.49-.85.758-1.784.758-2.75A8.5 8.5 0 0119.742 15.49zM21 13.5v-1.5a8.5 8.5 0 00-2.067-5.375" /></svg>
                             <span>Pushing limits (Working Out)</span>
                         </div>
                     </div>
@@ -357,7 +359,7 @@
         </section>
 
 
-        <!-- === 5. CONTACT SECTION (with REAL backend) === -->
+        <!-- === 5. CONTACT SECTION (with Formspree) === -->
         <section id="contact" class="py-24 scroll-reveal">
             <div class="max-w-4xl mx-auto px-4">
                 <!-- Header with decorative elements -->
@@ -377,28 +379,17 @@
                 <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl shadow-2xl p-10 md:p-12 border border-gray-700">
                     
                     <!-- 
-                      NETLIFY FORM UPDATE:
-                      - Added `name`, `method`, `data-netlify`, and `data-netlify-honeypot` attributes
-                      - Added hidden input for "form-name"
-                      - Added hidden "bot-field" for spam protection
+                      UNIVERSAL FORM:
+                      - This form no longer has Netlify-specific attributes.
+                      - It is now handled by the JavaScript below.
                     -->
-                    <form id="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="space-y-7">
-                        
-                        <!-- Hidden input for Netlify form name recognition -->
-                        <input type="hidden" name="form-name" value="contact" />
-                        <!-- Hidden honeypot field for spam -->
-                        <p class="hidden">
-                            <label>
-                                Don’t fill this out if you’re human: <input name="bot-field" />
-                            </label>
-                        </p>
+                    <form id="contact-form" class="space-y-7">
                         
                         <!-- Name -->
                         <div class="group">
                             <label for="name" class="block text-base font-semibold text-gray-300 mb-3 group-focus-within:text-cyan-400 transition-colors">
                                 Name
                             </label>
-                            <!-- WIDTH FIX: Removed w-full -->
                             <input type="text" id="name" name="name" required
                                    class="form-input-enhanced text-base text-gray-900">
                         </div>
@@ -408,7 +399,6 @@
                             <label for="email" class="block text-base font-semibold text-gray-300 mb-3 group-focus-within:text-cyan-400 transition-colors">
                                 Email
                             </label>
-                            <!-- WIDTH FIX: Removed w-full -->
                             <input type="email" id="email" name="email" required
                                    class="form-input-enhanced text-base text-gray-900">
                         </div>
@@ -418,7 +408,6 @@
                             <label for="message" class="block text-base font-semibold text-gray-300 mb-3 group-focus-within:text-cyan-400 transition-colors">
                                 Message
                             </label>
-                            <!-- WIDTH FIX: Kept w-full -->
                             <textarea id="message" name="message" rows="6" required
                                       class="form-input-enhanced resize-none text-base w-full text-gray-900"></textarea>
                         </div>
@@ -443,11 +432,6 @@
                     </div>
                 </div>
 
-                <!-- 
-                  UI FIX:
-                  - This "Or reach out directly" block is now *outside* the gradient form container above.
-                  - This correctly places it *below* the main form box.
-                -->
                 <div class="mt-12 text-center">
                     <p class="text-gray-400 mb-4">Or reach out directly:</p>
                     <a href="mailto:devanshbiyani@gmail.com" class="text-cyan-400 hover:text-cyan-300 font-medium inline-flex items-center">
@@ -499,16 +483,19 @@
         <div class="flex space-x-3">
             <div class="flex-shrink-0">
                 <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-800 shadow-lg">
-                    <img id="album-art" src="https://via.placeholder.com/64x64/1DB954/FFFFFF?text=♪" alt="Album Art" class="w-full h-full object-cover album-art">
+                    <!-- FIX: Using a safer placeholder URL to prevent ERR_NAME_NOT_RESOLVED -->
+                    <img id="album-art" src="https://placehold.co/64x64/1DB954/FFFFFF?text=Spotify" alt="Album Art" class="w-full h-full object-cover album-art">
                 </div>
             </div>
             
             <div class="flex-1 min-w-0">
-                <h3 id="track-name" class="text-sm font-bold text-white truncate mb-1">
-                    Connect your Spotify
-                </h3>
+                <a href="#" target="_blank">
+                    <h3 id="track-name" class="text-sm font-bold text-white truncate mb-1">
+                        Loading...
+                    </h3>
+                </a>
                 <p id="artist-name" class="text-xs text-gray-400 truncate">
-                    Click below to link your account
+                    ...
                 </p>
                 
                 <div class="mt-3">
@@ -615,7 +602,17 @@
             const totalTimeEl = document.getElementById('total-time');
             const progressFill = document.getElementById('progress-fill');
             const spotifyConnectLink = document.getElementById('spotify-connect');
-            const spotifyStatusEl = document.getElementById('spotify-status'); // <-- New element
+            const spotifyStatusEl = document.getElementById('spotify-status');
+
+            // --- Function to set the widget to an error state ---
+            function setWidgetError() {
+                spotifyStatusEl.textContent = 'Error';
+                trackNameEl.textContent = 'Widget Error';
+                artistNameEl.textContent = 'Could not connect to API';
+                albumArtImg.src = 'https://placehold.co/64x64/F34343/FFFFFF?text=Error';
+                albumArt.classList.add('paused');
+                spotifyWidget.classList.remove('hidden'); // Ensure it's visible
+            }
 
             // Close widget
             closeSpotify.addEventListener('click', () => {
@@ -637,14 +634,21 @@
 
             async function fetchNowPlaying() {
                 try {
-                    // This path works for both Netlify and Vercel
-                    const response = await fetch('/.netlify/functions/now-playing');
+                    // This path works for both Netlify and Vercel (due to netlify.toml)
+                    // FIX: Added a leading slash to make it an absolute path.
+                    const response = await fetch('/api/now-playing');
                     
                     if (!response.ok) {
-                        throw new Error('Failed to fetch data');
+                        // If the server itself failed (500, etc.)
+                        throw new Error(`Server responded with status: ${response.status}`);
                     }
                     
                     const data = await response.json();
+
+                    // --- NEW: Check if the API function had an internal error ---
+                    if (data.status === 'error') {
+                        throw new Error(`API error: ${data.error}`);
+                    }
 
                     if (data.status === 'playing' || data.status === 'last_played') {
                         // --- Update Text ---
@@ -652,11 +656,11 @@
                         artistNameEl.textContent = data.artistName;
 
                         // --- Update Album Art ---
-                        albumArtImg.src = data.albumArtUrl || 'https://via.placeholder.com/64x64/1DB954/FFFFFF?text=♪';
+                        albumArtImg.src = data.albumArtUrl || 'https://placehold.co/64x64/1DB954/FFFFFF?text=Spotify';
 
                         // --- Update Progress ---
                         const progressMs = data.status === 'playing' ? data.progressMs : 0;
-                        const progressPercent = (progressMs / data.durationMs) * 100;
+                        const progressPercent = (data.durationMs > 0) ? (progressMs / data.durationMs) * 100 : 0;
                         currentTimeEl.textContent = formatTime(progressMs);
                         totalTimeEl.textContent = formatTime(data.durationMs);
                         progressFill.style.width = `${progressPercent}%`;
@@ -685,7 +689,7 @@
                         spotifyStatusEl.textContent = 'Spotify';
                         trackNameEl.textContent = 'Not Currently Playing';
                         artistNameEl.textContent = 'Listen with me on Spotify';
-                        albumArtImg.src = 'https://via.placeholder.com/64x64/1DB954/FFFFFF?text=♪';
+                        albumArtImg.src = 'https://placehold.co/64x64/1DB954/FFFFFF?text=Spotify';
                         albumArt.classList.add('paused');
                         playPauseBtn.innerHTML = playIcon;
                         currentTimeEl.textContent = '0:00';
@@ -701,11 +705,8 @@
 
                 } catch (error) {
                     console.error('Error fetching Now Playing:', error);
-                    // Show a subtle error state
-                    spotifyStatusEl.textContent = 'Error';
-                    trackNameEl.textContent = 'Widget Error';
-                    artistNameEl.textContent = 'Could not connect to API';
-                    spotifyWidget.classList.remove('hidden'); // Ensure it's visible if there's an error
+                    // Now this will catch all errors and show the error state
+                    setWidgetError();
                 }
             }
 
@@ -715,7 +716,13 @@
             // Fetch data every 10 seconds to keep it updated
             setInterval(fetchNowPlaying, 10000);
             
-            // --- "Real" Netlify Contact Form Logic ---
+            
+            // --- UNIVERSAL Contact Form Logic (using Formspree) ---
+
+            // !!! IMPORTANT: REPLACE WITH YOUR FORMSPREE URL !!!
+            const FORM_ENDPOINT = 'https://formspree.io/f/xeoprbao'; 
+            // !!! ---
+
             const contactForm = document.getElementById('contact-form');
             const submitButton = document.getElementById('submit-button');
             const formMessages = document.getElementById('form-messages');
@@ -728,33 +735,38 @@
                 // 1. Show loading state
                 formMessages.innerHTML = `<div class="text-blue-400">Sending...</div>`;
                 submitButton.disabled = true;
-                buttonTextSpan.innerHTML = 'Sending...'; // Only change the text
+                buttonTextSpan.innerHTML = 'Sending...';
 
                 // 2. Get form data
                 const formData = new FormData(contactForm);
 
-                // 3. --- REAL NETLIFY FORM SUBMISSION (via AJAX) ---
-                // This submits the form data without a page reload
-                fetch('/', {
+                // 3. --- UNIVERSAL FORM SUBMISSION (to Formspree) ---
+                fetch(FORM_ENDPOINT, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams(formData).toString()
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
                 })
-                .then(() => {
-                    // 4. Show success message
-                    formMessages.innerHTML = `
-                        <div class="bg-green-900/50 border border-green-500 rounded-xl p-4 flex items-center justify-center space-x-2">
-                            <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span class="text-green-400 font-semibold">Message sent successfully! I'll be in touch soon.</span>
-                        </div>
-                    `;
-                    contactForm.reset(); // Clear the form
+                .then(response => {
+                    if (response.ok) {
+                        // 4. Show success message
+                        formMessages.innerHTML = `
+                            <div class="bg-green-900/50 border border-green-500 rounded-xl p-4 flex items-center justify-center space-x-2">
+                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-green-400 font-semibold">Message sent successfully! I'll be in touch soon.</span>
+                            </div>
+                        `;
+                        contactForm.reset(); // Clear the form
 
-                    // Hide message after 5 seconds
-                    setTimeout(() => {
-                        formMessages.innerHTML = '';
-                    }, 5000);
-
+                        // Hide message after 5 seconds
+                        setTimeout(() => {
+                            formMessages.innerHTML = '';
+                        }, 5000);
+                    } else {
+                        // Handle form errors from Formspree
+                        throw new Error('Form submission failed');
+                    }
                 })
                 .catch((error) => {
                     // 5. Show error message
@@ -771,34 +783,43 @@
                     submitButton.disabled = false;
                     buttonTextSpan.innerHTML = originalButtonHTML; // Restore original button content
                 });
-                // --- END OF REAL SUBMISSION ---
+                // --- END OF UNIVERSAL SUBMISSION ---
             });
         });
     </script>
+
+    <!-- === Floating Socials Bar === -->
     <div class="floating-socials-bar">
         <div class="flex flex-col md:flex-row items-center gap-6">
             
+            <!-- GitHub -->
             <a href="https://github.com/devanshbiyani" target="_blank" rel="noopener noreferrer" title="GitHub" class="floating-icon">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" clip-rule="evenodd"/></svg>
             </a>
             
+            <!-- LinkedIn -->
             <a href="https://www.linkedin.com/in/devansh-biyani" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="floating-icon">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
             </a>
 
+            <!-- Twitter (from image) -->
             <a href="https://x.com/devansh_biyani" target="_blank" rel="noopener noreferrer" title="Twitter" class="floating-icon">
                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
             </a>
             
+            <!-- Email (from image) -->
             <a href="mailto:devanshbiyani@gmail.com" title="Email" class="floating-icon">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
             </a>
             
+            <!-- Resume (from image) -->
             <a href="https://drive.google.com/file/d/1Cmr90nvS4v-feH9SBq0Z3QyelCDmIaIJ/view?usp=sharing" target="_blank" title="Resume" class="floating-icon">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A1.875 1.875 0 0118.001 22.5H5.999a1.875 1.875 0 01-1.498-2.382z" /></svg>
+                <!-- Using a more common "document" icon for resume -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path></svg>
             </a>
 
         </div>
     </div>
 </body>
 </html>
+

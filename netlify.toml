@@ -1,0 +1,10 @@
+[build]
+  # Tell Netlify to look for functions in the `api` folder, just like Vercel
+  functions = "api"
+
+[[redirects]]
+  # Redirect any calls from the Vercel-style URL...
+  from = "/api/now-playing"
+  # ...to Netlify's own function URL.
+  to = "/.netlify/functions/now-playing"
+  status = 200 # 200 means this is a "rewrite"

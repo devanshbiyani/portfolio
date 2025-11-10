@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devansh Biyani | Full-Stack Developer</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
     <style>
         /* Set default font */
         body {
             font-family: 'Inter', sans-serif;
-            /* Subtle dot grid background for a "tech" feel, a nod to the inspiration site */
+            /* Subtle dot grid background - DEFAULT DARK THEME */
             background-color: #030712; /* gray-950 */
             background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
             background-size: 25px 25px;
+            color: #d1d5db; /* gray-300 */
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         /* Smooth scrolling */
@@ -24,12 +23,92 @@
             scroll-behavior: smooth;
         }
 
-        /* --- Scroll-Reveal Animation Classes --- */
-        
-        /* State before animation */
+        /* --- Begin: theme-aware variables & form input (paste into your <style> near top) --- */
+/* base theme variables (dark default) */
+:root {
+  --bg: #030712;
+  --panel: rgba(15,23,42,0.9);
+  --text: #e6eef8;
+  --muted: #94a3b8;
+  --accent-from: #22d3ee;
+  --accent-to: #818cf8;
+  --card-bg: #0f172a;
+  --input-bg: #0f172a; /* dark input bg */
+  --input-border: rgba(148,163,184,0.08);
+  --focus-ring: rgba(34,211,238,0.25);
+}
+
+/* light theme support for both methods: html[data-theme="light"] and .light */
+html[data-theme="light"], html.light {
+  --bg: #ffffff;
+  --panel: rgba(255,255,255,0.96);
+  --text: #0f172a;
+  --muted: #475569;
+  --accent-from: #06b6d4;
+  --accent-to: #6366f1;
+  --card-bg: #f8fafc;
+  --input-bg: #ffffff; /* light input bg */
+  --input-border: #d1d5db;
+  --focus-ring: rgba(6,182,212,0.16);
+}
+
+/* Unified input styling that uses variables (works without Tailwind build) */
+.form-input-enhanced {
+  background-color: var(--input-bg);
+  color: var(--text);
+  border: 2px solid var(--input-border);
+  border-radius: 0.5rem;             /* rounded-lg */
+  padding: 0.75rem 1rem;             /* py-3 px-4 */
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: box-shadow .15s ease, border-color .15s ease, background-color .15s ease;
+  outline: none;
+}
+
+/* placeholder color (subtle) */
+.form-input-enhanced::placeholder {
+  color: rgba(0,0,0,0.35);
+}
+html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
+  /* lighter placeholder on dark theme */
+  color: rgba(255,255,255,0.35);
+}
+
+/* focus */
+.form-input-enhanced:focus {
+  box-shadow: 0 0 0 6px var(--focus-ring);
+  border-color: var(--accent-from);
+  background-color: var(--input-bg);
+}
+
+/* small responsive tweak for textarea */
+.form-input-enhanced.resize-none {
+  resize: none;
+}
+/* --- End: theme-aware variables & form input --- */
+
+
+        /* --- 1. On-Load Staggered Fade-in Animation (NEW) --- */
+        .fade-in-on-load {
+            opacity: 0;
+            transform: translateY(20px);
+            /* Uses CSS variable for delay */
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: var(--delay, '0s');
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- 2. Scroll-Reveal Animation (TWEAKED) --- */
         .scroll-reveal {
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateY(30px); /* Subtler: Was 50px */
             transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
                         transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: opacity, transform;
@@ -41,12 +120,72 @@
             transform: translateY(0);
         }
 
-        /* Staggered delay for multiple elements */
-        .scroll-reveal:nth-child(1) { transition-delay: 0s; }
-        .scroll-reveal:nth-child(2) { transition-delay: 0.1s; }
-        .scroll-reveal:nth-child(3) { transition-delay: 0.2s; }
-        .scroll-reveal:nth-child(4) { transition-delay: 0.3s; }
-        /* --- End Animation Classes --- */
+        /* --- 3. Light Theme Styles (NEW) --- */
+        .light body {
+            background-color: #f9fafb; /* gray-50 */
+            color: #374151; /* gray-700 */
+            background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.03) 1px, transparent 0);
+        }
+        .light .text-white {
+            color: #111827; /* gray-900 */
+        }
+        .light .text-gray-300 {
+            color: #374151; /* gray-700 */
+        }
+        .light .text-gray-400 {
+            color: #4b5563; /* gray-600 */
+        }
+        .light .text-gray-500 {
+            color: #6b7280; /* gray-500 */
+        }
+        .light .border-gray-800 {
+            border-color: #e5e7eb; /* gray-200 */
+        }
+        /* Project Cards */
+        .light .project-card-border {
+             background: linear-gradient(to right, #22d3ee, #818cf8); /* Unchanged */
+        }
+        .light .project-card-bg {
+            background-color: #ffffff; /* white */
+        }
+        .light .project-card-bg:hover {
+            background-color: #f9fafb; /* gray-50 */
+        }
+        /* Skill Pills */
+        .light .skill-pill, .light .skill-pill-sm {
+            background-color: #e0f2fe; /* sky-100 */
+            color: #0369a1; /* sky-700 */
+        }
+        /* Contact Form */
+        .light .bg-gradient-to-br.from-gray-900.to-gray-800 {
+            background: #ffffff; /* white */
+        }
+        
+        /* --- THIS IS THE FIX --- */
+        /* Override for form inputs in light mode */
+        /* --- END OF FIX --- */
+        
+        /* Floating Socials / Spotify */
+        .light .floating-socials-bar, 
+        .light .spotify-widget {
+            background: rgba(255, 255, 255, 0.8); /* white with 80% opacity */
+            border-color: #d1d5db; /* gray-300 */
+        }
+        .light .floating-icon {
+            color: #4b5563; /* gray-600 */
+        }
+        .light .floating-icon:hover {
+            color: #0ea5e9; /* sky-500 */
+        }
+        .light #spotify-status {
+             color: #4b5563; /* gray-600 */
+        }
+        .light .spotify-widget #track-name {
+            color: #111827; /* gray-900 */
+        }
+
+        /* --- End Theme Styles --- */
+
 
         /* Custom gradient for project cards */
         .project-card-border {
@@ -178,82 +317,66 @@
 
     </style>
 </head>
-<body class="text-gray-300 antialiased">
+<body class="antialiased"> <div class="max-w-4xl mx-auto px-6 py-20">
 
-    <!-- Container -->
-    <div class="max-w-4xl mx-auto px-6 py-24">
-
-        <!-- === 1. HERO SECTION === -->
-        <section class="min-h-screen flex flex-col justify-center text-left scroll-reveal">
-            <h1 class="text-5xl sm:text-7xl font-black text-white">
+        <section class="min-h-screen flex flex-col justify-center text-left">
+            <h1 class="text-5xl sm:text-7xl font-black text-white fade-in-on-load" style="--delay: 0.2s;">
                 Devansh Biyani
             </h1>
-            <h2 class="text-3xl sm:text-5xl font-bold mt-2">
-                <!-- Animated gradient text -->
+            <h2 class="text-3xl sm:text-5xl font-bold mt-2 fade-in-on-load" style="--delay: 0.4s;">
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500">
                     Full-Stack Developer
                 </span>
             </h2>
-            <p class="text-xl text-gray-400 mt-6 max-w-2xl">
+            <p class="text-xl text-gray-400 mt-6 max-w-2xl fade-in-on-load" style="--delay: 0.6s;">
                 I build dynamic and performant web applications, crafting intuitive experiences from pixel to database.
             </p>
             
-            <!-- Social Icons (in-page) -->
-            <div class="flex space-x-6 mt-8">
-                <!-- LinkedIn -->
+            <div class="flex space-x-6 mt-8 fade-in-on-load" style="--delay: 0.8s;">
                 <a href="https://www.linkedin.com/in/devansh-biyani" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                     <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
                 </a>
-                <!-- GitHub -->
                 <a href="https://github.com/devanshbiyani" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                     <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" clip-rule="evenodd"/></svg>
                 </a>
-                <!-- Instagram -->
                 <a href="https://www.instagram.com/view_from_5.10_" target="_blank" rel="noopener noreferrer" title="Instagram" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </a>
-                <!-- Pinterest -->
                 <a href="https://www.pinterest.com/devanshbiyani" target="_blank" rel="noopener noreferrer" title="Pinterest" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                     <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.017 0C5.396 0 0 5.396 0 12.017c0 4.93 2.91 9.143 7.02 10.975-.02.218-.037.44-.037.66 0 .867.314 1.72.88 2.373.57.653 1.353 1.003 2.182 1.003 1.14 0 2.18-.51 2.848-1.33.667-.82 1.03-1.84 1.03-2.91 0-.46-.06-1.01-.18-1.57-.12-.56-.3-1.12-.53-1.68-.23-.56-.5-1.1-.82-1.63-.32-.53-.68-1.04-1.08-1.52-.4-.48-.83-.9-1.28-1.28-.45-.38-.93-.68-1.43-.88-.5-.2-1.02-.3-1.56-.3-.6 0-1.1.06-1.52.18-.42.12-.78.3-1.1.53-.32.23-.57.5-.77.82-.2.32-.3.67-.3.97 0 .2.04.4.1.6.08.2.18.38.3.53.12.15.28.3.47.4s.4.18.63.26c.23.08.48.13.75.17.27.04.53.06.8.06.42 0 .83-.06 1.22-.18.4-.12.77-.3 1.12-.54.35-.24.66-.52.94-.85.28-.33.5-.7.68-1.1.18-.4.3-.83.38-1.28.08-.45.13-.9.13-1.35 0-1.1-.3-2.1-.88-3-.58-.9-1.38-1.6-2.38-2.1-1-.5-2.08-.7-3.23-.7-1.4 0-2.7.3-3.88.92-1.18.62-2.15 1.4-2.9 2.34-.75.94-1.3 2-1.66 3.15-.36 1.15-.54 2.35-.54 3.6 0 1.9.5 3.6 1.5 5.1.98 1.5 2.3 2.6 3.9 3.4 1.6.8 3.3 1.2 5.2 1.2 1.3 0 2.6-.2 3.8-.6 1.2-.4 2.3-.9 3.3-1.5s1.8-1.4 2.5-2.2c.7-.8 1.3-1.7 1.7-2.6.4-.9.6-1.9.6-3 0-1.6-.4-3.1-1.2-4.5-.8-1.4-1.9-2.5-3.2-3.3-1.3-.8-2.8-1.2-4.4-1.2-1.2 0-2.4.3-3.4.8-.9.5-1.7 1.2-2.4 2-1.1 1.3-1.6 2.9-1.6 4.7 0 .8.2 1.5.5 2.1.3.6.8 1 1.3 1.3.5.3 1.1.5 1.7.5.5 0 1-.1 1.4-.4.4-.3.7-.7.9-1.1.2-.4.3-.9.3-1.4 0-.8-.2-1.5-.5-2.1-.3-.6-.8-1-1.3-1.3-.3-.2-.7-.3-1-.3-.2 0-.4 0-.6.1-.2.1-.4.2-.6.3s-.3.3-.5.4c-.1.1-.3.3-.4.4s-.2.3-.3.4c-.1.1-.2.2-.3.4-.1.2-.1.3-.2.4-.1.1-.1.3-.1.4 0 .3.1.6.2.9.1.3.3.6.5.8.2.2.4.5.7.6.3.1.6.2.9.2.4 0 .7-.1.9-.2.2-.1.5-.2.7-.4.2-.2.4-.4.5-.6.1-.2.3-.4.4-.7.1-.3.1-.6.1-.9 0-.6-.1-1.1-.4-1.6-.3-.5-.7-.9-1.1-1.2-.4-.3-.9-.5-1.4-.5-.6 0-1.1.1-1.6.4-.5.3-.9.7-1.2 1.2s-.6 1-.8 1.6c-.2.6-.3 1.2-.3 1.8 0 1.2.3 2.3.9 3.2.6.9 1.4 1.7 2.4 2.2 1 .5 2 1.3 2.8 2.5 1.1 1.5 1.7 3.3 1.7 5.2 0 1.3-.3 2.5-.8 3.6-.5 1.1-1.2 2.1-2.1 2.9-.9.8-2 1.5-3.2 2-1.2.5-2.5.7-3.9.7-1.9 0-3.7-.4-5.4-1.2-1.7-.8-3.1-1.9-4.2-3.4C1.76 20.94.8 19.14.8 17.1c0-1.4.2-2.7.6-4 .4-1.3.9-2.5 1.6-3.6.7-1.1 1.6-2.1 2.7-2.9 1.1-.8 2.4-1.5 3.8-2C10.9 3.2 12.7 3 14.5 3c1.7 0 3.3.4 4.8 1.2 1.5.8 2.7 1.9 3.7 3.3s1.5 3 1.5 4.8c0 1-.2 2-.5 2.9-.3.9-.8 1.7-1.4 2.4-.6.7-1.3 1.2-2 1.5-.7.3-1.5.5-2.2.5-.8 0-1.6-.2-2.2-.5-.7-.3-1.3-.8-1.8-1.4-.5-.6-.9-1.3-1.1-2.1-.2-.8-.3-1.6-.3-2.4z"/></svg>
                 </a>
             </div>
 
-            <!-- Scroll Down Arrow -->
-            <a href="#about" class="absolute bottom-12 left-1/2 -translate-x-1/2 text-gray-400 animate-bounce">
+            <a href="#about" class="absolute bottom-12 left-1/2 -translate-x-1/2 text-gray-400 animate-bounce fade-in-on-load" style="--delay: 1.0s;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
                 </svg>
             </a>
         </section>
 
-        <!-- === 2. ABOUT & PASSIONS SECTION === -->
-        <section id="about" class="py-24 scroll-reveal">
+        <section id="about" class="py-20 scroll-reveal">
             <h2 class="text-4xl font-bold text-white mb-8">About Me</h2>
             <div class="space-y-6 text-lg text-gray-300">
                 <p>
-                    Hello! I'm Devansh, a Computer Science student with a deep-seated passion for development. From intuitive Android apps in Kotlin to responsive, data-driven web applications with React and Tailwind, I love bringing ideas to life with clean, efficient code.
+                    Hello! I'm Devansh, a <span id="age" class="font-semibold text-cyan-400">...</span> year old Computer Science student with a deep-seated passion for development. From intuitive Android apps in Kotlin to responsive, data-driven web applications with React and Tailwind, I love bringing ideas to life with clean, efficient code.
                 </p>
                 <p>
                     I thrive on problem-solving and am always eager to learn new technologies, whether it's diving into backend logic with Node.js or mastering new database structures.
                 </p>
                 
-                <!-- Passions Section -->
                 <div class="pt-6">
                     <h3 class="text-xl font-semibold text-white mb-4">Beyond the Code</h3>
                     <p class="text-gray-400">When I'm not at my keyboard, you'll find me:
                     </p>
                     <div class="flex flex-wrap gap-6 mt-4">
-                        <!-- Basketball Hint -->
                         <div class="flex items-center space-x-2 text-gray-300">
                             <svg class="w-5 h-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.792V6.167a2.833 2.833 0 00-2.833-2.833H5.833A2.833 2.833 0 003 6.167v6.625m18 0v5.583a2.833 2.833 0 01-2.833 2.833H5.833A2.833 2.833 0 013 18.375v-5.583m18 0c0 1.564-.47 3.036-1.333 4.25M3 12.792c0 1.564.47 3.036 1.333 4.25m15.334-4.25a2.833 2.833 0 01-2.833 2.833H8.833a2.833 2.833 0 01-2.833-2.833m11.166 0a2.833 2.833 0 00-2.833-2.833H8.833a2.833 2.833 0 00-2.833 2.833m11.166 0c0 1.564-.47 3.036-1.333 4.25M5.166 17.042c.864 1.214 2.336 2.091 3.667 2.091h6.334c1.33 0 2.802-.877 3.667-2.091m-11.166 0a2.833 2.833 0 012.833-2.833h5.5a2.833 2.833 0 012.833 2.833m-11.166 0c0-1.564.47 3.036-1.333 4.25m7.5 4.25c.864-1.214 1.333-2.686 1.333-4.25" /></svg>
                             <span>Driving on the court (Basketball)</span>
                         </div>
-                        <!-- Music Hint -->
                         <div class="flex items-center space-x-2 text-gray-300">
                              <svg class="w-5 h-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.002 1.93l-6.363 3.692a2.25 2.25 0 01-2.274 0L3.26 18.23a2.25 2.25 0 01-1.002-1.93v-3.75m16.5 0a2.25 2.25 0 00-1.002-1.93l-6.363-3.692a2.25 2.25 0 00-2.274 0L3.26 12.32A2.25 2.25 0 002.258 14.25v3.75m16.5 0v-3.75m0 0l-6.363-3.692M3.26 12.32l6.363 3.692m0 0l6.363-3.692m-6.363 3.692v3.692" /></svg>
                             <span>Finding new rhythms (Music)</span>
                         </div>
-                        <!-- Workout Hint -->
                         <div class="flex items-center space-x-2 text-gray-300">
                             <svg class="w-5 h-5 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 3A8.5 8.5 0 0118 11.5c0 1.63-.463 3.16-1.258 4.49L14 13.5v-1.5h-1.5v-1.5H11v-1.5H9.5V3zM9.5 3A8.5 8.5 0 001 11.5c0 1.63.463 3.16 1.258 4.49L6 13.5v-1.5h1.5v-1.5H9v-1.5h.5V3zM9.5 3v1.5h1.5V6H13v1.5h1.5V9H16v1.5h1.242c.49-.85.758-1.784.758-2.75A8.5 8.5 0 009.5 3zm0 0V1.5c.917 0 1.8.15 2.625.433m-2.625 0V1.5A8.5 8.5 0 006.875 3.433M3 13.5A8.5 8.5 0 0011.5 21c1.63 0 3.16-.463 4.49-1.258L13.5 18h-1.5v-1.5H10.5v-1.5H9v-1.5H3v1.5zm0 0v1.5c0 .917.15 1.8.433 2.625M3 13.5v1.5h1.5V16.5H6V18h1.5v1.5h1.242c-.49.85-.758-1.784-.758-2.75A8.5 8.5 0 013 13.5zm16.742 1.99L18 18h-1.5v-1.5H15v-1.5h-1.5v-1.5h-1.242c.49-.85.758-1.784.758-2.75A8.5 8.5 0 0119.742 15.49zM21 13.5v-1.5a8.5 8.5 0 00-2.067-5.375" /></svg>
                             <span>Pushing limits (Working Out)</span>
@@ -263,14 +386,12 @@
             </div>
         </section>
 
-        <!-- === 3. MY STACK / SKILLS SECTION === -->
-        <section id="stack" class="py-24 scroll-reveal">
+        <section id="stack" class="py-20 scroll-reveal">
             <h2 class="text-4xl font-bold text-white mb-8">My Stack</h2>
             <p class="text-lg text-gray-400 mb-10">
                 A selection of technologies I'm proficient in and enjoy working with.
             </p>
             <div class="flex flex-wrap gap-3">
-                <!-- Skills from resume, plus a few logical additions for "full-stack" -->
                 <span class="skill-pill">JavaScript (ES6+)</span>
                 <span class="skill-pill">React.js</span>
                 <span class="skill-pill">Tailwind CSS</span>
@@ -290,15 +411,12 @@
         </section>
 
 
-        <!-- === 4. PROJECTS SECTION === -->
-        <section id="projects" class="py-24 scroll-reveal">
+        <section id="projects" class="py-20 scroll-reveal">
             <h2 class="text-4xl font-bold text-white mb-10">Selected Projects</h2>
 
-            <!-- Project Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 
-                <!-- Project 1: Currency Converter (From Resume) -->
-                <div class="project-card-border">
+                <div class="project-card-border scroll-reveal">
                     <div class="project-card-bg p-6 h-full flex flex-col">
                         <h3 class="text-2xl font-bold text-white mb-3">Currency Converter</h3>
                         <p class="text-gray-400 mb-4 flex-grow">
@@ -322,8 +440,7 @@
                     </div>
                 </div>
 
-                <!-- Project 2: Todo List App (From Resume) -->
-                <div class="project-card-border">
+                <div class="project-card-border scroll-reveal">
                     <div class="project-card-bg p-6 h-full flex flex-col">
                         <h3 class="text-2xl font-bold text-white mb-3">Android Todo List App</h3>
                         <p class="text-gray-400 mb-4 flex-grow">
@@ -338,8 +455,7 @@
                     </div>
                 </div>
                 
-                <!-- Project 3: Simulated Backend Project (To show full-stack) -->
-                <div class="project-card-border">
+                <div class="project-card-border scroll-reveal">
                     <div class="project-card-bg p-6 h-full flex flex-col">
                         <h3 class="text-2xl font-bold text-white mb-3">Portfolio API</h3>
                         <p class="text-gray-400 mb-4 flex-grow">
@@ -359,10 +475,8 @@
         </section>
 
 
-        <!-- === 5. CONTACT SECTION (with Formspree) === -->
-        <section id="contact" class="py-24 scroll-reveal">
+        <section id="contact" class="py-20 scroll-reveal">
             <div class="max-w-4xl mx-auto px-4">
-                <!-- Header with decorative elements -->
                 <div class="text-center mb-12">
                     <div class="inline-block mb-4">
                         <div class="flex items-center justify-center w-16 h-16 mx-auto bg-gradient-to-br from-cyan-500 to-indigo-600 rounded-2xl shadow-lg">
@@ -375,44 +489,35 @@
                     </p>
                 </div>
 
-                <!-- Enhanced Form Container -->
                 <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl shadow-2xl p-10 md:p-12 border border-gray-700">
                     
-                    <!-- 
-                      UNIVERSAL FORM:
-                      - This form no longer has Netlify-specific attributes.
-                      - It is now handled by the JavaScript below.
-                    -->
                     <form id="contact-form" class="space-y-7">
                         
-                        <!-- Name -->
                         <div class="group">
                             <label for="name" class="block text-base font-semibold text-gray-300 mb-3 group-focus-within:text-cyan-400 transition-colors">
                                 Name
                             </label>
                             <input type="text" id="name" name="name" required
-                                   class="form-input-enhanced text-base text-gray-900">
+                                   class="form-input-enhanced w-full rounded-lg px-4 py-3 text-base">
                         </div>
                         
-                        <!-- Email -->
                         <div class="group">
                             <label for="email" class="block text-base font-semibold text-gray-300 mb-3 group-focus-within:text-cyan-400 transition-colors">
                                 Email
                             </label>
                             <input type="email" id="email" name="email" required
-                                   class="form-input-enhanced text-base text-gray-900">
+                                   class="form-input-enhanced w-full rounded-lg px-4 py-3 text-base"
+>
                         </div>
                         
-                        <!-- Message -->
                         <div class="group">
                             <label for="message" class="block text-base font-semibold text-gray-300 mb-3 group-focus-within:text-cyan-400 transition-colors">
                                 Message
                             </label>
                             <textarea id="message" name="message" rows="6" required
-                                      class="form-input-enhanced resize-none text-base w-full text-gray-900"></textarea>
+                                      class="form-input-enhanced w-full rounded-lg px-4 py-3 text-base"></textarea>
                         </div>
                         
-                        <!-- Submit Button with enhanced styling -->
                         <div>
                             <button type="submit" id="submit-button"
                                     class="w-full px-8 py-4 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-cyan-500/50 hover:from-cyan-400 hover:to-indigo-500 transform hover:-translate-y-1 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-cyan-300/50 active:scale-95 relative overflow-hidden group">
@@ -420,16 +525,13 @@
                                     Send Message
                                     <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                 </span>
-                                <!-- Animated background effect -->
                                 <span class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                             </button>
                         </div>
                     </form>
                     
-                    <!-- Form status messages with enhanced styling -->
                     <div id="form-messages" class="mt-6 text-center font-medium">
-                        <!-- This will be populated by JavaScript -->
-                    </div>
+                        </div>
                 </div>
 
                 <div class="mt-12 text-center">
@@ -443,18 +545,14 @@
         </section>
 
 
-        <!-- === 6. FOOTER === -->
         <footer class="text-center py-12 border-t border-gray-800 text-gray-500 scroll-reveal">
             <div class="flex justify-center space-x-6 mb-4">
-                <!-- LinkedIn -->
                 <a href="https://www.linkedin.com/in/devansh-biyani" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="hover:text-cyan-400 transition-colors duration-300">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
                 </a>
-                <!-- GitHub -->
                 <a href="https://github.com/devanshbiyani" target="_blank" rel="noopener noreferrer" title="GitHub" class="hover:text-cyan-400 transition-colors duration-300">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" clip-rule="evenodd"/></svg>
                 </a>
-                <!-- Instagram -->
                 <a href="https://www.instagram.com/view_from_5.10_" target="_blank" rel="noopener noreferrer" title="Instagram" class="hover:text-cyan-400 transition-colors duration-300">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </a>
@@ -464,7 +562,6 @@
 
     </div>
 
-    <!-- Spotify Now Playing Widget -->
     <div id="spotify-widget" class="spotify-widget">
         <div class="flex items-center justify-between mb-3">
             <div class="flex items-center space-x-2">
@@ -483,7 +580,6 @@
         <div class="flex space-x-3">
             <div class="flex-shrink-0">
                 <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-800 shadow-lg">
-                    <!-- FIX: Using a safer placeholder URL to prevent ERR_NAME_NOT_RESOLVED -->
                     <img id="album-art" src="https://placehold.co/64x64/1DB954/FFFFFF?text=Spotify" alt="Album Art" class="w-full h-full object-cover album-art">
                 </div>
             </div>
@@ -535,9 +631,12 @@
         </div>
     </div>
 
-    <!-- Tailwind Config for Custom Styling (Optional but good practice) -->
     <script>
         tailwind.config = {
+            // NEW: Added darkMode: 'class'
+            // This is not strictly needed for the manual .light class method,
+            // but it's good practice if you ever switch to Tailwind's native dark mode.
+            darkMode: 'class', 
             theme: {
                 extend: {
                     fontFamily: {
@@ -550,15 +649,11 @@
                                 '.form-input': {
                                     '@apply w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300': {},
                                 },
-                                // NOTE: w-full is now applied directly in the HTML,
-                                // but we leave the other styles here.
-                                '.form-input-enhanced': { '@apply bg-white border-2 border-gray-600 rounded-xl px-5 py-3.5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all duration-300 hover:border-cyan-500 shadow-sm': {}, 
-                                },
                                 '.skill-pill': {
-                                    '@apply bg-gray-800 text-cyan-300 text-sm font-medium px-4 py-2 rounded-full': {},
+                                    '@apply bg-gray-800 text-cyan-300 text-sm font-medium px-4 py-2 rounded-full transition-colors duration-300': {},
                                 },
                                 '.skill-pill-sm': {
-                                    '@apply bg-gray-800 text-cyan-300 text-xs font-medium px-3 py-1 rounded-full': {},
+                                    '@apply bg-gray-800 text-cyan-300 text-xs font-medium px-3 py-1 rounded-full transition-colors duration-300': {},
                                 }
                             })
                         }
@@ -568,7 +663,6 @@
         }
     </script>
 
-    <!-- Page JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -581,13 +675,73 @@
                     }
                 });
             }, {
-                threshold: 0.05, // Trigger when 5% of the element is visible
-                rootMargin: '0px 0px -50px 0px' // Start animation slightly before element enters viewport
+                threshold: 0.05, 
+                rootMargin: '0px 0px -50px 0px'
             });
 
             // Target all elements with the .scroll-reveal class
             const hiddenElements = document.querySelectorAll('.scroll-reveal');
             hiddenElements.forEach((el) => observer.observe(el));
+
+
+            // --- NEW: Age Counter Logic ---
+            const ageEl = document.getElementById('age');
+            
+            function calculateAge() {
+                // !!! SET YOUR BIRTHDAY HERE !!!
+                // Format: YYYY, M, D, H, M, S
+                // Note: Month is 0-indexed (0 = Jan, 1 = Feb, etc.)
+                // UPDATED with your DOB: 02-02-2003
+                const birthDate = new Date(2003, 1, 2); 
+                // ---------------------------------
+                
+                const now = new Date();
+                const diff = now.getTime() - birthDate.getTime();
+                const age = diff / (1000 * 60 * 60 * 24 * 365.25);
+                
+                if(ageEl) {
+                    ageEl.textContent = age.toFixed(9);
+                }
+            }
+            
+            // Calculate on load
+            calculateAge();
+            // Update frequently for the "live" effect
+            setInterval(calculateAge, 50);
+
+
+            // --- NEW: Theme Toggle Logic ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+            const userTheme = localStorage.getItem('theme');
+
+            // Apply theme on load
+            if (userTheme === 'light') {
+                document.documentElement.classList.add('light');
+                sunIcon?.classList.remove('hidden');
+                moonIcon?.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('light');
+                sunIcon?.classList.add('hidden');
+                moonIcon?.classList.remove('hidden');
+            }
+
+            // Add click listener
+            themeToggleBtn?.addEventListener('click', () => {
+                const html = document.documentElement;
+                if (html.classList.contains('light')) {
+                    html.classList.remove('light');
+                    localStorage.setItem('theme', 'dark');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                } else {
+                    html.classList.add('light');
+                    localStorage.setItem('theme', 'light');
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                }
+            });
 
 
             // --- Real Spotify Widget Logic ---
@@ -634,38 +788,28 @@
 
             async function fetchNowPlaying() {
                 try {
-                    // This path works for both Netlify and Vercel (due to netlify.toml)
-                    // FIX: Added a leading slash to make it an absolute path.
                     const response = await fetch('/api/now-playing');
                     
                     if (!response.ok) {
-                        // If the server itself failed (500, etc.)
                         throw new Error(`Server responded with status: ${response.status}`);
                     }
                     
                     const data = await response.json();
 
-                    // --- NEW: Check if the API function had an internal error ---
                     if (data.status === 'error') {
                         throw new Error(`API error: ${data.error}`);
                     }
 
                     if (data.status === 'playing' || data.status === 'last_played') {
-                        // --- Update Text ---
                         trackNameEl.textContent = data.trackName;
                         artistNameEl.textContent = data.artistName;
-
-                        // --- Update Album Art ---
                         albumArtImg.src = data.albumArtUrl || 'https://placehold.co/64x64/1DB954/FFFFFF?text=Spotify';
-
-                        // --- Update Progress ---
                         const progressMs = data.status === 'playing' ? data.progressMs : 0;
                         const progressPercent = (data.durationMs > 0) ? (progressMs / data.durationMs) * 100 : 0;
                         currentTimeEl.textContent = formatTime(progressMs);
                         totalTimeEl.textContent = formatTime(data.durationMs);
                         progressFill.style.width = `${progressPercent}%`;
 
-                        // --- Update Play/Pause Button and Status Text ---
                         if (data.status === 'playing') {
                             spotifyStatusEl.textContent = 'Now Playing';
                             playPauseBtn.innerHTML = pauseIcon;
@@ -676,16 +820,11 @@
                             albumArt.classList.add('paused');
                         }
                         
-                        // --- Update Links ---
-                        // Make the track name a link to the song
                         trackNameEl.parentElement.href = data.songUrl || '#';
                         trackNameEl.parentElement.target = '_blank';
-                        
-                        // Hide the "Connect" link
                         spotifyConnectLink.classList.add('hidden');
 
                     } else {
-                        // --- Not Playing State (Offline) ---
                         spotifyStatusEl.textContent = 'Spotify';
                         trackNameEl.textContent = 'Not Currently Playing';
                         artistNameEl.textContent = 'Listen with me on Spotify';
@@ -696,51 +835,39 @@
                         totalTimeEl.textContent = '0:00';
                         progressFill.style.width = '0%';
                         
-                        // Show connect link
                         spotifyConnectLink.classList.remove('hidden');
                         spotifyConnectLink.textContent = 'Listen with me on Spotify →';
-                        spotifyConnectLink.href = 'http://googleusercontent.com/spotify.com/5'; // Your public Spotify profile
+                        spotifyConnectLink.href = 'http://googleusercontent.com/spotify.com/5';
                         spotifyConnectLink.target = '_blank';
                     }
 
                 } catch (error) {
                     console.error('Error fetching Now Playing:', error);
-                    // Now this will catch all errors and show the error state
                     setWidgetError();
                 }
             }
 
-            // Fetch data on page load
             fetchNowPlaying();
-
-            // Fetch data every 10 seconds to keep it updated
             setInterval(fetchNowPlaying, 10000);
             
             
             // --- UNIVERSAL Contact Form Logic (using Formspree) ---
-
-            // !!! IMPORTANT: REPLACE WITH YOUR FORMSPREE URL !!!
             const FORM_ENDPOINT = 'https://formspree.io/f/xeoprbao'; 
-            // !!! ---
 
             const contactForm = document.getElementById('contact-form');
             const submitButton = document.getElementById('submit-button');
             const formMessages = document.getElementById('form-messages');
             const buttonTextSpan = submitButton.querySelector('.relative.z-10');
-            const originalButtonHTML = buttonTextSpan.innerHTML; // Store original button content
+            const originalButtonHTML = buttonTextSpan.innerHTML; 
 
             contactForm.addEventListener('submit', (e) => {
-                e.preventDefault(); // Prevent default form submission
-
-                // 1. Show loading state
+                e.preventDefault(); 
                 formMessages.innerHTML = `<div class="text-blue-400">Sending...</div>`;
                 submitButton.disabled = true;
                 buttonTextSpan.innerHTML = 'Sending...';
 
-                // 2. Get form data
                 const formData = new FormData(contactForm);
 
-                // 3. --- UNIVERSAL FORM SUBMISSION (to Formspree) ---
                 fetch(FORM_ENDPOINT, {
                     method: 'POST',
                     body: formData,
@@ -750,26 +877,22 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        // 4. Show success message
                         formMessages.innerHTML = `
                             <div class="bg-green-900/50 border border-green-500 rounded-xl p-4 flex items-center justify-center space-x-2">
                                 <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span class="text-green-400 font-semibold">Message sent successfully! I'll be in touch soon.</span>
                             </div>
                         `;
-                        contactForm.reset(); // Clear the form
+                        contactForm.reset(); 
 
-                        // Hide message after 5 seconds
                         setTimeout(() => {
                             formMessages.innerHTML = '';
                         }, 5000);
                     } else {
-                        // Handle form errors from Formspree
                         throw new Error('Form submission failed');
                     }
                 })
                 .catch((error) => {
-                    // 5. Show error message
                     formMessages.innerHTML = `
                         <div class="bg-red-900/50 border border-red-500 rounded-xl p-4 flex items-center justify-center space-x-2">
                             <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -779,47 +902,46 @@
                     console.error('Form submission error:', error);
                 })
                 .finally(() => {
-                    // 6. Re-enable button
                     submitButton.disabled = false;
-                    buttonTextSpan.innerHTML = originalButtonHTML; // Restore original button content
+                    buttonTextSpan.innerHTML = originalButtonHTML; 
                 });
-                // --- END OF UNIVERSAL SUBMISSION ---
             });
         });
     </script>
 
-    <!-- === Floating Socials Bar === -->
     <div class="floating-socials-bar">
         <div class="flex flex-col md:flex-row items-center gap-6">
             
-            <!-- GitHub -->
             <a href="https://github.com/devanshbiyani" target="_blank" rel="noopener noreferrer" title="GitHub" class="floating-icon">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" clip-rule="evenodd"/></svg>
             </a>
             
-            <!-- LinkedIn -->
             <a href="https://www.linkedin.com/in/devansh-biyani" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="floating-icon">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
             </a>
 
-            <!-- Twitter (from image) -->
             <a href="https://x.com/devansh_biyani" target="_blank" rel="noopener noreferrer" title="Twitter" class="floating-icon">
                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
             </a>
             
-            <!-- Email (from image) -->
             <a href="mailto:devanshbiyani@gmail.com" title="Email" class="floating-icon">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
             </a>
             
-            <!-- Resume (from image) -->
             <a href="https://drive.google.com/file/d/1Cmr90nvS4v-feH9SBq0Z3QyelCDmIaIJ/view?usp=sharing" target="_blank" title="Resume" class="floating-icon">
-                <!-- Using a more common "document" icon for resume -->
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path></svg>
             </a>
+
+            <button id="theme-toggle" title="Toggle theme" class="floating-icon">
+                <svg id="theme-toggle-sun" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <svg id="theme-toggle-moon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                </svg>
+            </button>
 
         </div>
     </div>
 </body>
 </html>
-

@@ -23,73 +23,73 @@
             scroll-behavior: smooth;
         }
 
-        /* --- Begin: theme-aware variables & form input (paste into your <style> near top) --- */
-/* base theme variables (dark default) */
-:root {
-  --bg: #030712;
-  --panel: rgba(15,23,42,0.9);
-  --text: #e6eef8;
-  --muted: #94a3b8;
-  --accent-from: #22d3ee;
-  --accent-to: #818cf8;
-  --card-bg: #0f172a;
-  --input-bg: #0f172a; /* dark input bg */
-  --input-border: rgba(148,163,184,0.08);
-  --focus-ring: rgba(34,211,238,0.25);
-}
+        /* --- Begin: theme-aware variables & form input --- */
+        /* base theme variables (dark default) */
+        :root {
+          --bg: #030712;
+          --panel: rgba(15,23,42,0.9);
+          --text: #e6eef8;
+          --muted: #94a3b8;
+          --accent-from: #22d3ee;
+          --accent-to: #818cf8;
+          --card-bg: #0f172a;
+          --input-bg: #0f172a; /* dark input bg */
+          --input-border: rgba(148,163,184,0.08);
+          --focus-ring: rgba(34,211,238,0.25);
+        }
 
-/* light theme support for both methods: html[data-theme="light"] and .light */
-html[data-theme="light"], html.light {
-  --bg: #ffffff;
-  --panel: rgba(255,255,255,0.96);
-  --text: #0f172a;
-  --muted: #475569;
-  --accent-from: #06b6d4;
-  --accent-to: #6366f1;
-  --card-bg: #f8fafc;
-  --input-bg: #ffffff; /* light input bg */
-  --input-border: #d1d5db;
-  --focus-ring: rgba(6,182,212,0.16);
-}
+        /* light theme support for both methods: html[data-theme="light"] and .light */
+        html[data-theme="light"], html.light {
+          --bg: #ffffff;
+          --panel: rgba(255,255,255,0.96);
+          --text: #0f172a;
+          --muted: #475569;
+          --accent-from: #06b6d4;
+          --accent-to: #6366f1;
+          --card-bg: #f8fafc;
+          --input-bg: #ffffff; /* light input bg */
+          --input-border: #d1d5db;
+          --focus-ring: rgba(6,182,212,0.16);
+        }
 
-/* Unified input styling that uses variables (works without Tailwind build) */
-.form-input-enhanced {
-  background-color: var(--input-bg);
-  color: var(--text);
-  border: 2px solid var(--input-border);
-  border-radius: 0.5rem;             /* rounded-lg */
-  padding: 0.75rem 1rem;             /* py-3 px-4 */
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 1rem;
-  transition: box-shadow .15s ease, border-color .15s ease, background-color .15s ease;
-  outline: none;
-}
+        /* Unified input styling that uses variables (works without Tailwind build) */
+        .form-input-enhanced {
+          background-color: var(--input-bg);
+          color: var(--text);
+          border: 2px solid var(--input-border);
+          border-radius: 0.5rem;             /* rounded-lg */
+          padding: 0.75rem 1rem;             /* py-3 px-4 */
+          width: 100%;
+          box-sizing: border-box;
+          font-size: 1rem;
+          transition: box-shadow .15s ease, border-color .15s ease, background-color .15s ease;
+          outline: none;
+        }
 
-/* placeholder color (subtle) */
-.form-input-enhanced::placeholder {
-  color: rgba(0,0,0,0.35);
-}
-html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
-  /* lighter placeholder on dark theme */
-  color: rgba(255,255,255,0.35);
-}
+        /* placeholder color (subtle) */
+        .form-input-enhanced::placeholder {
+          color: rgba(0,0,0,0.35);
+        }
+        html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
+          /* lighter placeholder on dark theme */
+          color: rgba(255,255,255,0.35);
+        }
 
-/* focus */
-.form-input-enhanced:focus {
-  box-shadow: 0 0 0 6px var(--focus-ring);
-  border-color: var(--accent-from);
-  background-color: var(--input-bg);
-}
+        /* focus */
+        .form-input-enhanced:focus {
+          box-shadow: 0 0 0 6px var(--focus-ring);
+          border-color: var(--accent-from);
+          background-color: var(--input-bg);
+        }
 
-/* small responsive tweak for textarea */
-.form-input-enhanced.resize-none {
-  resize: none;
-}
-/* --- End: theme-aware variables & form input --- */
+        /* small responsive tweak for textarea */
+        .form-input-enhanced.resize-none {
+          resize: none;
+        }
+        /* --- End: theme-aware variables & form input --- */
 
 
-        /* --- 1. On-Load Staggered Fade-in Animation (NEW) --- */
+        /* --- 1. On-Load Staggered Fade-in Animation --- */
         .fade-in-on-load {
             opacity: 0;
             transform: translateY(20px);
@@ -105,10 +105,10 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
             }
         }
 
-        /* --- 2. Scroll-Reveal Animation (TWEAKED) --- */
+        /* --- 2. Scroll-Reveal Animation --- */
         .scroll-reveal {
             opacity: 0;
-            transform: translateY(30px); /* Subtler: Was 50px */
+            transform: translateY(30px);
             transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
                         transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: opacity, transform;
@@ -120,7 +120,7 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
             transform: translateY(0);
         }
 
-        /* --- 3. Light Theme Styles (NEW) --- */
+        /* --- 3. Light Theme Styles --- */
         .light body {
             background-color: #f9fafb; /* gray-50 */
             color: #374151; /* gray-700 */
@@ -161,21 +161,11 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
             background: #ffffff; /* white */
         }
         
-        /* --- THIS IS THE FIX --- */
-        /* Override for form inputs in light mode */
-        /* --- END OF FIX --- */
-        
         /* Floating Socials / Spotify */
         .light .floating-socials-bar, 
         .light .spotify-widget {
-            background: rgba(255, 255, 255, 0.8); /* white with 80% opacity */
+            /* This style is modified by Glass Icons */
             border-color: #d1d5db; /* gray-300 */
-        }
-        .light .floating-icon {
-            color: #4b5563; /* gray-600 */
-        }
-        .light .floating-icon:hover {
-            color: #0ea5e9; /* sky-500 */
         }
         .light #spotify-status {
              color: #4b5563; /* gray-600 */
@@ -183,6 +173,132 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
         .light .spotify-widget #track-name {
             color: #111827; /* gray-900 */
         }
+        
+        /* --- START: Added styles for new effects --- */
+
+        /* --- Begin: Pixel Blast Background --- */
+        #pixel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            opacity: 0.5;
+        }
+
+        .pixel {
+            width: 100%;
+            padding-bottom: 100%; /* Creates a square */
+            background: rgba(255, 255, 255, 0.01); /* Faintly visible */
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .pixel.glowing {
+            /* Use your theme's accent color! */
+            background: var(--accent-from); 
+            box-shadow: 0 0 10px var(--accent-from), 0 0 20px var(--accent-from);
+            animation: fadeOut 2s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; background: rgba(255, 255, 255, 0.01); box-shadow: none; }
+        }
+        /* --- End: Pixel Blast Background --- */
+        
+        /* --- Begin: Click Spark --- */
+        .spark {
+            position: fixed; /* Use fixed to position relative to viewport */
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 8px;
+            /* Use your theme's accent color! */
+            background: var(--accent-from);
+            box-shadow: 0 0 5px var(--accent-from), 0 0 10px var(--accent-from);
+            border-radius: 50%;
+            pointer-events: none; /* So you can click through it */
+            z-index: 9999;
+            opacity: 0;
+            animation: burst 0.5s ease-out forwards;
+        }
+
+        @keyframes burst {
+            0% { 
+                opacity: 1; 
+                transform: translate(0, 0) scale(0.5); 
+            }
+            100% { 
+                opacity: 0; 
+                /* Use CSS variables for dynamic end position */
+                transform: translate(var(--x), var(--y)) scale(0); 
+            }
+        }
+        /* --- End: Click Spark --- */
+
+        /* --- Begin: Rotating Text Badge --- */
+        
+        /* The animation that spins the SVG */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* The container for the badge */
+        .rotating-text-container {
+            position: fixed;
+            /* Position it - adjust as needed */
+            top: 10rem; 
+            right: 2rem;
+            width: 120px; /* Set a fixed size */
+            height: 120px;
+            z-index: 999; /* Just below your social/spotify bars */
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        /* The SVG element itself */
+        .rotating-text-svg {
+            animation: spin 15s linear infinite; /* Apply the animation */
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        
+        /* The text inside the SVG */
+        .rotating-text-svg textPath {
+            fill: var(--text); /* Use your theme variable for text color */
+            font-size: 10px; 
+            letter-spacing: 0.8px; 
+            text-transform: uppercase;
+            font-weight: 600; /* Medium-bold */
+        }
+
+        /* The icon in the middle */
+        .rotating-text-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            z-index: 1;
+        }
+
+        /* --- Hover Effects --- */
+        .rotating-text-container:hover {
+             transform: scale(1.1); /* Grow a bit */
+        }
+        .rotating-text-container:hover .rotating-text-svg {
+            animation-play-state: paused; /* Pause animation on hover */
+        }
+
+        /* --- Hide on Mobile --- */
+        /* It might be too crowded on small screens */
+        @media (max-width: 767px) {
+            .rotating-text-container {
+                display: none; 
+            }
+        }
+        /* --- End: Rotating Text Badge --- */
+        
+        /* --- END: Added styles for new effects --- */
 
         /* --- End Theme Styles --- */
 
@@ -271,68 +387,123 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
             transition: width 0.3s ease;
         }
 
-        /* === Floating Socials Bar === */
+
+        /* === START: REPLACED Floating Socials Bar (Glass Icons) === */
+        
+        /* This is now an INVISIBLE container */
         .floating-socials-bar {
             position: fixed;
             bottom: 2rem;
             left: 2rem;
-            background: rgba(15, 23, 42, 0.8); /* slate-900 with 80% opacity */
-            backdrop-filter: blur(10px);
-            border: 1px solid #334155; /* slate-700 */
-            border-radius: 9999px; /* rounded-full */
-            padding: 0.75rem 1rem;
             z-index: 1000;
-            transition: all 0.3s ease;
+        }
+        
+        /* The container for the row of icons */
+        .floating-socials-bar .flex {
+            gap: 0.75rem; /* 12px space between icons */
         }
 
+        /* This is the new Glass Icon style */
         .floating-icon {
-            color: #94a3b8; /* slate-400 */
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            /* Glass Effect (Dark Mode) */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px); /* Safari support */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--muted); /* Use your theme variable */
+            
             transition: all 0.2s ease;
         }
 
         .floating-icon:hover {
-            color: #22d3ee; /* cyan-400 */
             transform: scale(1.1);
+            color: var(--accent-from); /* Use your theme variable */
+            box-shadow: 0 0 15px rgba(34,211,238,0.25);
+            border-color: rgba(34,211,238,0.5); /* cyan-400 */
         }
 
-        /* On mobile, stack it vertically and move it from the corner */
+        /* On mobile, center the bar */
         @media (max-width: 767px) {            
             .floating-socials-bar {
-                /* Center it on mobile */
                 left: 50%;
                 transform: translateX(-50%);
                 bottom: 1rem;
-                /* Make it horizontal again to fit */
-                padding: 0.5rem 0.75rem; 
             }
             .floating-socials-bar .flex {
-                flex-direction: row; /* Force row layout */
-                gap: 1.25rem; /* space-x-5 */
+                flex-direction: row;
+                gap: 0.5rem; /* Tighter gap on mobile */
+            }
+            .floating-icon {
+                 width: 40px;
+                 height: 40px;
             }
             .floating-icon svg {
                 width: 1.25rem; /* w-5 */
                 height: 1.25rem; /* h-5 */
             }
         }
+        
+        /* --- Light Theme for Glass Icons --- */
+        .light .floating-icon {
+            background: rgba(255, 255, 255, 0.6); /* Lighter background */
+            border-color: rgba(0, 0, 0, 0.05);
+            color: var(--muted);
+        }
+        .light .floating-icon:hover {
+            color: var(--accent-to); /* Use your theme variable */
+            box-shadow: 0 0 15px rgba(6,182,212,0.2);
+            border-color: var(--accent-from);
+        }
+        /* === END: REPLACED Floating Socials Bar (Glass Icons) === */
 
     </style>
 </head>
-<body class="antialiased"> <div class="max-w-4xl mx-auto px-6 py-20">
+<body class="antialiased">
 
-        <section class="min-h-screen flex flex-col justify-center text-left">
-            <h1 class="text-5xl sm:text-7xl font-black text-white fade-in-on-load" style="--delay: 0.2s;">
+    <a href="#contact" class="rotating-text-container" title="Get in touch!">
+        
+        <div class="rotating-text-icon">
+            ✉️
+        </div>
+
+        <svg class="rotating-text-svg" viewBox="0 0 100 100">
+            <path id="circlePath" fill="none" d="
+                M 10, 50
+                a 40,40 0 1,1 80,0
+                a 40,40 0 1,1 -80,0
+            " />
+            <text>
+                <textPath href="#circlePath">
+                    GET IN TOUCH • GET IN TOUCH • GET IN TOUCH •
+                </textPath>
+            </text>
+        </svg>
+    </a>
+    <div class="max-w-4xl mx-auto px-6 py-20">
+
+        <section class="min-h-screen flex flex-col justify-center text-left relative overflow-hidden">
+            
+            <div id="pixel-grid" class="absolute inset-0 z-0"></div>
+            <h1 class="text-5xl sm:text-7xl font-black text-white fade-in-on-load relative z-10" style="--delay: 0.2s;">
                 Devansh Biyani
             </h1>
-            <h2 class="text-3xl sm:text-5xl font-bold mt-2 fade-in-on-load" style="--delay: 0.4s;">
+            <h2 class="text-3xl sm:text-5xl font-bold mt-2 fade-in-on-load relative z-10" style="--delay: 0.4s;">
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500">
                     Full-Stack Developer
                 </span>
             </h2>
-            <p class="text-xl text-gray-400 mt-6 max-w-2xl fade-in-on-load" style="--delay: 0.6s;">
+            <p class="text-xl text-gray-400 mt-6 max-w-2xl fade-in-on-load relative z-10" style="--delay: 0.6s;">
                 I build dynamic and performant web applications, crafting intuitive experiences from pixel to database.
             </p>
             
-            <div class="flex space-x-6 mt-8 fade-in-on-load" style="--delay: 0.8s;">
+            <div class="flex space-x-6 mt-8 fade-in-on-load relative z-10" style="--delay: 0.8s;">
                 <a href="https://www.linkedin.com/in/devansh-biyani" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
                     <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
                 </a>
@@ -353,13 +524,12 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
                 </svg>
             </a>
         </section>
-
         <section id="about" class="py-20 scroll-reveal">
             <h2 class="text-4xl font-bold text-white mb-8">About Me</h2>
             <div class="space-y-6 text-lg text-gray-300">
                 <p>
-                    Hello! I'm Devansh, a <span id="age" class="font-semibold text-cyan-400">...</span> year old Computer Science student with a deep-seated passion for development. From intuitive Android apps in Kotlin to responsive, data-driven web applications with React and Tailwind, I love bringing ideas to life with clean, efficient code.
-                </p>
+                    Hello! I'm Devansh, a <span id="age" class="font-semibold text-cyan-400 tabular-nums">...</span> year old Computer Science student with a deep-seated passion for development. From intuitive Android apps in Kotlin to responsive, data-driven web applications with React and Tailwind, I love bringing ideas to life with clean, efficient code.
+                    </p>
                 <p>
                     I thrive on problem-solving and am always eager to learn new technologies, whether it's diving into backend logic with Node.js or mastering new database structures.
                 </p>
@@ -409,8 +579,6 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
                 <span class="skill-pill">REST APIs</span>
             </div>
         </section>
-
-
         <section id="projects" class="py-20 scroll-reveal">
             <h2 class="text-4xl font-bold text-white mb-10">Selected Projects</h2>
 
@@ -473,8 +641,6 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
 
             </div>
         </section>
-
-
         <section id="contact" class="py-20 scroll-reveal">
             <div class="max-w-4xl mx-auto px-4">
                 <div class="text-center mb-12">
@@ -543,8 +709,6 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
                 </div>
             </div>
         </section>
-
-
         <footer class="text-center py-12 border-t border-gray-800 text-gray-500 scroll-reveal">
             <div class="flex justify-center space-x-6 mb-4">
                 <a href="https://www.linkedin.com/in/devansh-biyani" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="hover:text-cyan-400 transition-colors duration-300">
@@ -559,8 +723,7 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
             </div>
             <p>&copy; 2025 Devansh Biyani. Built with passion and code.</p>
         </footer>
-
-    </div>
+        </div>
 
     <div id="spotify-widget" class="spotify-widget">
         <div class="flex items-center justify-between mb-3">
@@ -630,7 +793,6 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
             </a>
         </div>
     </div>
-
     <script>
         tailwind.config = {
             // NEW: Added darkMode: 'class'
@@ -662,7 +824,6 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
             }
         }
     </script>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -684,7 +845,7 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
             hiddenElements.forEach((el) => observer.observe(el));
 
 
-            // --- NEW: Age Counter Logic ---
+            // --- Age Counter Logic ---
             const ageEl = document.getElementById('age');
             
             function calculateAge() {
@@ -710,7 +871,7 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
             setInterval(calculateAge, 50);
 
 
-            // --- NEW: Theme Toggle Logic ---
+            // --- Theme Toggle Logic ---
             const themeToggleBtn = document.getElementById('theme-toggle');
             const sunIcon = document.getElementById('theme-toggle-sun');
             const moonIcon = document.getElementById('theme-toggle-moon');
@@ -906,9 +1067,108 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
                     buttonTextSpan.innerHTML = originalButtonHTML; 
                 });
             });
+            
+            
+            /*
+            ==================================================
+            START: ALL NEW JAVASCRIPT FOR EFFECTS
+            ==================================================
+            */
+            
+            // --- START: Pixel Grid Logic ---
+            function createPixelGrid() {
+                const grid = document.getElementById('pixel-grid');
+                if (!grid) return;
+
+                // Clear old grid
+                grid.innerHTML = ''; 
+
+                const pixelSize = 40; // Match grid-template-columns
+                const cols = Math.floor(grid.clientWidth / pixelSize);
+                const rows = Math.floor(grid.clientHeight / pixelSize);
+                
+                grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+                const numPixels = cols * rows;
+                for (let i = 0; i < numPixels; i++) {
+                    const pixel = document.createElement('div');
+                    pixel.classList.add('pixel');
+                    grid.appendChild(pixel);
+                }
+
+                // Start the animation
+                animatePixels(grid);
+            }
+
+            function animatePixels(grid) {
+                // Clear any existing interval to prevent duplicates
+                if (grid.dataset.intervalId) {
+                    clearInterval(grid.dataset.intervalId);
+                }
+
+                grid.dataset.intervalId = setInterval(() => {
+                    const pixels = grid.children;
+                    if (pixels.length === 0) return;
+                    
+                    // Get a random pixel
+                    const randomIndex = Math.floor(Math.random() * pixels.length);
+                    const pixel = pixels[randomIndex];
+                    
+                    // Animate it, but only if it's not already glowing
+                    if (pixel && !pixel.classList.contains('glowing')) {
+                        pixel.classList.add('glowing');
+                        
+                        // Remove the class after the animation
+                        setTimeout(() => {
+                            pixel.classList.remove('glowing');
+                        }, 2000); // Must match animation duration
+                    }
+                }, 100); // How often to light up a new pixel
+            }
+            
+            // Call it on load
+            createPixelGrid();
+            // Re-create grid on window resize
+            window.addEventListener('resize', createPixelGrid);
+            // --- END: Pixel Grid Logic ---
+
+
+            // --- START: Click Spark Logic ---
+            function createClickSpark(e) {
+                const SPARK_COUNT = 8;
+                for (let i = 0; i < SPARK_COUNT; i++) {
+                    const spark = document.createElement('div');
+                    spark.classList.add('spark');
+
+                    // Set initial position at cursor
+                    spark.style.left = `${e.clientX}px`;
+                    spark.style.top = `${e.clientY}px`;
+
+                    // Generate random end-translation for the burst effect
+                    const angle = Math.random() * Math.PI * 2;
+                    const radius = Math.random() * 50 + 30; // 30px to 80px radius
+                    const endX = Math.cos(angle) * radius;
+                    const endY = Math.sin(angle) * radius;
+
+                    // Set CSS variables for the animation
+                    spark.style.setProperty('--x', `${endX}px`);
+                    spark.style.setProperty('--y', `${endY}px`);
+                    
+                    document.body.appendChild(spark);
+                    
+                    // Remove the spark after the animation
+                    setTimeout(() => {
+                        spark.remove();
+                    }, 500); // Must match animation duration
+                }
+            }
+
+            // Add the listener to the whole document
+            document.addEventListener('click', createClickSpark);
+            // --- END: Click Spark Logic ---
+
         });
     </script>
-
     <div class="floating-socials-bar">
         <div class="flex flex-col md:flex-row items-center gap-6">
             
@@ -943,5 +1203,5 @@ html:not([data-theme="light"]):not(.light) .form-input-enhanced::placeholder {
 
         </div>
     </div>
-</body>
+    </body>
 </html>

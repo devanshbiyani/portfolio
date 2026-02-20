@@ -321,6 +321,19 @@
             transform: translateY(-4px);
         }
 
+        .section-panel {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .light .section-panel {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(148, 163, 184, 0.3);
+        }
+
         /* Spotify Now Playing Widget */
         .spotify-widget {
             position: fixed;
@@ -486,7 +499,7 @@
                 </text>
         </svg>
     </a>
-    <div class="max-w-4xl mx-auto px-6 py-20">
+    <div class="max-w-5xl mx-auto px-6 py-16">
 
         <section class="min-h-screen flex flex-col justify-center text-left relative overflow-hidden">
             
@@ -524,7 +537,8 @@
                 </svg>
             </a>
         </section>
-        <section id="about" class="py-20 scroll-reveal">
+        <section id="about" class="py-14 scroll-reveal">
+            <div class="section-panel">
             <h2 class="text-4xl font-bold text-white mb-8">About Me</h2>
             <div class="space-y-6 text-lg text-gray-300">
                 <p>
@@ -554,35 +568,38 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section id="stack" class="py-20 scroll-reveal">
-            <h2 class="text-4xl font-bold text-white mb-8">My Stack</h2>
-            <p class="text-lg text-gray-400 mb-10">
-                A selection of technologies I'm proficient in and enjoy working with.
-            </p>
-            <div class="flex flex-wrap gap-3">
-                <span class="skill-pill">JavaScript (ES6+)</span>
-                <span class="skill-pill">React.js</span>
-                <span class="skill-pill">Tailwind CSS</span>
-                <span class="skill-pill">HTML5</span>
-                <span class="skill-pill">CSS3</span>
-                <span class="skill-pill">Node.js</span>
-                <span class="skill-pill">Java</span>
-                <span class="skill-pill">Kotlin</span>
-                <span class="skill-pill">SQL</span>
-                <span class="skill-pill">MySQL</span>
-                <span class="skill-pill">MongoDB</span>
-                <span class="skill-pill">Git & GitHub</span>
-                <span class="skill-pill">Android Studio</span>
-                <span class="skill-pill">Docker</span>
-                <span class="skill-pill">REST APIs</span>
             </div>
         </section>
-        <section id="projects" class="py-20 scroll-reveal">
+
+        <section id="projects" class="py-14 scroll-reveal">
+            <div class="section-panel">
             <h2 class="text-4xl font-bold text-white mb-10">Selected Projects</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="project-card-border scroll-reveal">
+                    <div class="project-card-bg p-6 h-full flex flex-col">
+                        <h3 class="text-2xl font-bold text-white mb-3">Collaborative Workspace</h3>
+                        <p class="text-gray-400 mb-4 flex-grow">
+                            A real-time collaboration platform where teams can organize tasks, share updates, and communicate in one workspace with fast, responsive interactions.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="skill-pill-sm">React</span>
+                            <span class="skill-pill-sm">Node.js</span>
+                            <span class="skill-pill-sm">Socket.IO</span>
+                            <span class="skill-pill-sm">MongoDB</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/devanshbiyani/collaborative-workspace" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-cyan-300 font-medium inline-flex items-center">
+                                GitHub
+                                <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
+                            </a>
+                            <a href="https://collaborative-workspace-demo.netlify.app" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 font-medium inline-flex items-center">
+                                Live Demo
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="project-card-border scroll-reveal">
                     <div class="project-card-bg p-6 h-full flex flex-col">
@@ -640,8 +657,34 @@
                 </div>
 
             </div>
+            </div>
         </section>
-        <section id="contact" class="py-20 scroll-reveal">
+        <section id="stack" class="py-14 scroll-reveal">
+            <div class="section-panel">
+            <h2 class="text-4xl font-bold text-white mb-8">My Stack</h2>
+            <p class="text-lg text-gray-400 mb-10">
+                A selection of technologies I'm proficient in and enjoy working with.
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <span class="skill-pill">JavaScript (ES6+)</span>
+                <span class="skill-pill">React.js</span>
+                <span class="skill-pill">Tailwind CSS</span>
+                <span class="skill-pill">HTML5</span>
+                <span class="skill-pill">CSS3</span>
+                <span class="skill-pill">Node.js</span>
+                <span class="skill-pill">Java</span>
+                <span class="skill-pill">Kotlin</span>
+                <span class="skill-pill">SQL</span>
+                <span class="skill-pill">MySQL</span>
+                <span class="skill-pill">MongoDB</span>
+                <span class="skill-pill">Git & GitHub</span>
+                <span class="skill-pill">Android Studio</span>
+                <span class="skill-pill">Docker</span>
+                <span class="skill-pill">REST APIs</span>
+            </div>
+            </div>
+        </section>
+        <section id="contact" class="py-14 scroll-reveal">
             <div class="max-w-4xl mx-auto px-4">
                 <div class="text-center mb-12">
                     <div class="inline-block mb-4">
